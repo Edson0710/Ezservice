@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="115dp"
+    android:layout_marginTop="5dp"
+    android:padding="8dp"
+    android:background="@color/colorAccent"
+    android:id="@+id/container_historial">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="vertical"
+        android:layout_margin="8dp">
+
+        <ImageView
+            android:id="@+id/historial_imagen"
+            android:layout_width="70dp"
+            android:layout_centerVertical="true"
+            android:layout_height="70dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/historial_imagen"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/historial_nombre"
+                android:layout_marginTop="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:text="Nombre "
+                android:textColor="#fff"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/historial_profesion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/historial_nombre"
+                android:text="Pofesion"
+                android:textColor="#fff"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/historial_costo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/historial_profesion"
+                android:text="Costo"
+                android:textColor="#fff"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/historial_fecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/historial_profesion"
+                android:text="Fecha"
+                android:textColor="#fff"
+                android:textSize="15sp" />
+
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>

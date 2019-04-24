@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="115dp"
+    android:layout_marginTop="5dp"
+    android:padding="8dp"
+    android:background="@color/colorAccent"
+    android:id="@+id/container_lista2">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="vertical"
+        android:layout_margin="8dp">
+
+        <ImageView
+            android:id="@+id/lista_imagen2"
+            android:layout_width="70dp"
+            android:layout_centerVertical="true"
+            android:layout_height="70dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/lista_imagen2"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/lista_nombre2"
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:text="Nombre uc"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/lista_estado3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lista_nombre2"
+                android:text="Estado: "
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/lista_estado4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lista_nombre2"
+                android:layout_toEndOf="@+id/lista_estado3"
+                android:text="texto"
+                android:textColor="#fff"
+                android:textSize="15sp" />
+
+
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>

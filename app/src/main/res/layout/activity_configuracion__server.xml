@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Configuracion">
+
+    <ImageView
+        android:id="@+id/iv_configuracion_server"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/img"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:id="@+id/tv1_configuracion_server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/iv_configuracion_server"
+        android:gravity="center"
+        android:text="Nombre"
+        android:textStyle="bold"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv2_configuracion_server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/tv1_configuracion_server"
+        android:gravity="center"
+        android:text="X.X"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv3_historial_server"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="30dp"
+        android:text="Historial"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv4_editar_server"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv3_historial_server"
+        android:layout_centerVertical="true"
+        android:paddingLeft="30dp"
+        android:layout_marginTop="15dp"
+        android:text="Editar perfil"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btn_configuracion_server"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="83dp"
+        android:hint="Cerrar sesion" />
+
+
+
+
+
+
+</RelativeLayout>

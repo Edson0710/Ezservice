@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".login1">
+
+    <ImageView
+        android:layout_width="163dp"
+        android:layout_height="135dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/icono1"
+
+        />
+
+    <EditText
+        android:layout_gravity="center"
+        android:layout_marginTop="35dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Correo electrónico"
+        android:inputType="text"
+        android:id="@+id/login1_et_correo"
+        />
+
+    <EditText
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        android:id="@+id/login1_et_password"
+        />
+
+    <RadioButton
+        android:id="@+id/radio_sesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:layout_marginLeft="41dp"
+        android:hint="Mantener sesión" />
+
+
+
+
+    <RadioGroup
+        android:id="@+id/rgroup"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <RadioButton
+            android:id="@+id/radio1"
+            android:text="Comun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"/>
+
+        <RadioButton
+            android:id="@+id/radio2"
+            android:text="Servidor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/login1_btn_iniciar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Iniciar"
+        android:textStyle="bold" />
+
+
+
+
+
+
+</LinearLayout>
