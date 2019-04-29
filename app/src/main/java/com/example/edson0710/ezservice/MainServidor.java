@@ -1,5 +1,6 @@
 package com.example.edson0710.ezservice;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -9,10 +10,32 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.edson0710.ezservice.models.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainServidor extends AppCompatActivity {
 
-    String id;
+    String id, id_firebase, url2;
+
+    FirebaseUser firebaseUser;
+    DatabaseReference reference;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -37,8 +60,27 @@ public class MainServidor extends AppCompatActivity {
 
         id = getIntent().getExtras().getString("id");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_server);
-        setSupportActionBar(toolbar);
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                //username.setText(user.getId());
+                id_firebase = user.getId();
+                json_firebase();
+                Toast.makeText(MainServidor.this, ""+id_firebase, Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new MainServidor.SectionsPagerAdapter(getSupportFragmentManager());
@@ -105,4 +147,43 @@ public class MainServidor extends AppCompatActivity {
             return null;
         }
     }
+
+
+    public void json_firebase(){
+
+            url2 = "http://ezservice.tech/update_estado_firebase_servidor.php?cat=" + id + "&est=" + 1 + "&idf=" + id_firebase;
+        JsonObjectRequest peticion = new JsonObjectRequest
+                (
+                        Request.Method.GET,
+                        url2,
+                        null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    String valor = response.getString("Estado");
+                                    switch (valor) {
+                                        case "OK":
+                                            //Toast.makeText(EditarPerfil.this, "Fallo al actualizar", Toast.LENGTH_SHORT).show();
+                                            break;
+                                        case "NO":
+
+                                            //Toast.makeText(EditarPerfil.this, "Datos actualizados", Toast.LENGTH_SHORT).show();
+                                            break;
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        , new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainServidor.this, "Error php", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        RequestQueue x = Volley.newRequestQueue(MainServidor.this);
+        x.add(peticion);
+    }
+
 }

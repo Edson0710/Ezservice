@@ -36,7 +36,8 @@
         <activity android:name=".Configuracion_Server" />
         <activity android:name=".ListaInteres_Servidor" />
         <activity android:name=".EditarPerfil" />
-        <activity android:name=".login1"></activity>
+        <activity android:name=".login1" />
+        <activity android:name=".MessageActivity"></activity>
     </application>
 
 </manifest>

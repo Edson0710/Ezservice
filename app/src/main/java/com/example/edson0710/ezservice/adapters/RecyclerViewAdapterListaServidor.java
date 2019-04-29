@@ -1,6 +1,7 @@
 package com.example.edson0710.ezservice.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.View;
@@ -8,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.edson0710.ezservice.MessageActivity;
 import com.example.edson0710.ezservice.R;
 import com.example.edson0710.ezservice.models.Lista;
 
@@ -42,10 +45,15 @@ public class RecyclerViewAdapterListaServidor extends RecyclerView.Adapter<Recyc
         viewHolder.container3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent i = new Intent(mContext2, TarjetasServidores.class);
-                //i.putExtra("id",mData2.get(viewHolder.getAdapterPosition()).getId_profesion2());
-
-                //mContext2.startActivity(i);
+                String prueba = mData2.get(viewHolder.getAdapterPosition()).getEstado();
+                String id_firebase = mData2.get(viewHolder.getAdapterPosition()).getId_firebase();
+                Toast.makeText(mContext2, "Seleccionaste: "+prueba, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext2, "Seleccionaste: "+id_firebase, Toast.LENGTH_SHORT).show();
+                if (prueba.equals("Aceptado")){
+                    Intent intent = new Intent(mContext2, MessageActivity.class);
+                    intent.putExtra("userid", id_firebase);
+                    mContext2.startActivity(intent);
+                }
             }
         });
 
@@ -92,8 +100,8 @@ public class RecyclerViewAdapterListaServidor extends RecyclerView.Adapter<Recyc
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            menu.add(this.getAdapterPosition(), 121, 0, "Eliminar");
-            menu.add(this.getAdapterPosition(), 122, 1, "Aceptar");
+            menu.add(this.getAdapterPosition(), 121, 1, "Rechazar");
+            menu.add(this.getAdapterPosition(), 122, 0, "Aceptar");
 
         }
 

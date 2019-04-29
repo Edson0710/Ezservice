@@ -1,7 +1,10 @@
 package com.example.edson0710.ezservice;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,27 +35,30 @@ import java.util.List;
 
 public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
 
-    String id_uc;
-    private String JSON_URL = "http://ezservice.tech/lista_interes.php?cat=" + id_uc;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+    String id_us;
+    private String JSON_URL = "http://ezservice.tech/lista_interes.php?cat=" + id_us;
     private JsonArrayRequest ArrayRequest;
     private RequestQueue requestQueue;
     RecyclerView recycler;
     ArrayList<Lista> listaInter;
     RecyclerViewAdapterListaServidor myadapter = new RecyclerViewAdapterListaServidor(getContext(), listaInter);
-    int id_us;
+    int id_uc, estado;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_lista_interes__servidor, container, false);
 
-        id_uc = getArguments().getString("id");
+        id_us = getArguments().getString("id");
         myadapter.notifyDataSetChanged();
         listaInter = new ArrayList<>();
         recycler = (RecyclerView) rootView.findViewById(R.id.recyclerview_lista);
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
 
         //Recieve data
         //id = getIntent().getExtras().getInt("id");
-        JSON_URL = "http://ezservice.tech/lista_interes_servidor.php?cat=" + id_uc;
+        JSON_URL = "http://ezservice.tech/lista_interes_servidor.php?cat=" + id_us;
         //ini views
         //TextView tv_prueba = findViewById(R.id.textoprueba);
 
@@ -60,6 +66,24 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
         //tv_prueba.setText(""+id);
 
         jsoncall();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                listaInter = new ArrayList<>();
+                jsoncall();
+
+                Handler handler = new Handler();
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 500);
+
+            }
+        });
 
         return rootView;
     }
@@ -83,6 +107,7 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
                         lista.setProfesion(jsonObject.getString("profesion"));
                         lista.setId_us(jsonObject.getInt("id_us"));
                         lista.setEstado(jsonObject.getString("estado"));
+                        lista.setId_firebase(jsonObject.getString("id_firebase"));
 
                         listaInter.add(lista);
 
@@ -127,14 +152,45 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 121:
-                id_us = listaInter.get(item.getGroupId()).getId_us();
+                id_uc = listaInter.get(item.getGroupId()).getId_us();
+                estado = 3;
                 jsoncall2();
-                Toast.makeText(getContext(), "Usuario eliminado...", Toast.LENGTH_SHORT).show();
-                listaInter.remove(item.getGroupId());
-                recycler.removeViewAt(item.getGroupId());
-                myadapter.notifyItemRemoved(item.getGroupId());
-                myadapter.notifyItemRangeChanged(item.getGroupId(), listaInter.size());
-                myadapter.notifyDataSetChanged();
+
+                Handler handler = new Handler();
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        listaInter = new ArrayList<>();
+                        jsoncall();
+                        myadapter.notifyDataSetChanged();
+                        Toast.makeText(getContext(), "Usuario Rechazado..." + id_us + " " + id_uc + " " + estado, Toast.LENGTH_SHORT).show();
+
+                    }
+                }, 500);
+
+
+                return true;
+
+            case 122:
+                id_uc = listaInter.get(item.getGroupId()).getId_us();
+                estado = 2;
+                jsoncall2();
+
+                handler = new Handler();
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        listaInter = new ArrayList<>();
+                        jsoncall();
+                        myadapter.notifyDataSetChanged();
+                        Toast.makeText(getContext(), "Usuario Aceptado..." + id_us + " " + id_uc + " " + estado, Toast.LENGTH_SHORT).show();
+
+                    }
+                }, 500);
 
                 return true;
             default:
@@ -143,7 +199,7 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
     }
 
     public void jsoncall2() {
-        String url = "http://ezservice.tech/delete_list.php?id_uc=" + id_uc + "&id_us=" + id_us;
+        String url = "http://ezservice.tech/update_estado.php?id_uc=" + id_uc + "&id_us=" + id_us + "&est=" + estado;
 
         JsonObjectRequest peticion = new JsonObjectRequest
                 (
@@ -157,10 +213,11 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
                                     String valor = response.getString("Estado");
                                     switch (valor) {
                                         case "OK":
-                                            Toast.makeText(getContext(), "Usuario ya solicitado", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(getContext(), "Usuario ya solicitado", Toast.LENGTH_SHORT).show();
                                             break;
                                         case "NO":
-                                            Toast.makeText(getContext(), "Añadido con éxito", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(getContext(), "Añadido con éxito", Toast.LENGTH_SHORT).show();
+                                            break;
                                     }
 
 
@@ -176,5 +233,9 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
                 });
         RequestQueue x = Volley.newRequestQueue(getContext());
         x.add(peticion);
+    }
+
+    public void jsoncall3() {
+
     }
 }

@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.edson0710.ezservice.MessageActivity;
 import com.example.edson0710.ezservice.R;
 import com.example.edson0710.ezservice.TarjetasServidores;
 import com.example.edson0710.ezservice.models.Lista;
@@ -38,7 +40,7 @@ public class RecyclerViewAdapterLista extends RecyclerView.Adapter<RecyclerViewA
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
 
-        View view;
+        final View view;
         view = View.inflate(mContext2, R.layout.lista_row_item, null);
 
         final MyViewHolder viewHolder = new MyViewHolder(view);
@@ -47,7 +49,17 @@ public class RecyclerViewAdapterLista extends RecyclerView.Adapter<RecyclerViewA
             public void onClick(View v) {
                 //Intent i = new Intent(mContext2, TarjetasServidores.class);
                 //i.putExtra("id",mData2.get(viewHolder.getAdapterPosition()).getId_profesion2());
-
+                String prueba = mData2.get(viewHolder.getAdapterPosition()).getEstado();
+                String id_firebase = mData2.get(viewHolder.getAdapterPosition()).getId_firebase();
+                String imagenURL = mData2.get(viewHolder.getAdapterPosition()).getImagen();
+                Toast.makeText(mContext2, "Seleccionaste: "+prueba, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext2, "Seleccionaste: "+id_firebase, Toast.LENGTH_SHORT).show();
+                if (prueba.equals("Aceptado")){
+                    Intent intent = new Intent(mContext2, MessageActivity.class);
+                    intent.putExtra("userid", id_firebase);
+                    intent.putExtra("imagenURL", imagenURL);
+                    mContext2.startActivity(intent);
+                }
                 //mContext2.startActivity(i);
             }
         });

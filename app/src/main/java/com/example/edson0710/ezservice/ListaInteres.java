@@ -1,8 +1,10 @@
 package com.example.edson0710.ezservice;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +35,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListaInteres extends Fragment {
+
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     String id_uc;
     private String JSON_URL = "http://ezservice.tech/lista_interes.php?cat=" + id_uc;
     private JsonArrayRequest ArrayRequest;
@@ -50,17 +55,30 @@ public class ListaInteres extends Fragment {
         myadapter.notifyDataSetChanged();
         listaInter = new ArrayList<>();
         recycler = (RecyclerView) rootView.findViewById(R.id.recyclerview_lista);
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe2);
 
-        //Recieve data
-        //id = getIntent().getExtras().getInt("id");
         JSON_URL = "http://ezservice.tech/lista_interes.php?cat=" + id_uc;
-        //ini views
-        //TextView tv_prueba = findViewById(R.id.textoprueba);
 
-        //setting values
-        //tv_prueba.setText(""+id);
 
         jsoncall();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                listaInter = new ArrayList<>();
+                jsoncall();
+
+                Handler handler = new Handler();
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 500);
+
+            }
+        });
 
         return rootView;
     }
@@ -84,6 +102,7 @@ public class ListaInteres extends Fragment {
                         lista.setProfesion(jsonObject.getString("profesion"));
                         lista.setId_us(jsonObject.getInt("id_us"));
                         lista.setEstado(jsonObject.getString("estado"));
+                        lista.setId_firebase(jsonObject.getString("id_firebase"));
 
                         listaInter.add(lista);
 

@@ -20,6 +20,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +38,8 @@ public class Configuracion extends Fragment {
     ImageView iv_imagen;
     private RequestOptions option;
 
+    FirebaseUser firebaseUser;
+    DatabaseReference reference;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +48,8 @@ public class Configuracion extends Fragment {
         id = getArguments().getString("id");
         option = new RequestOptions().centerCrop().placeholder(R.drawable.loading_shape).error(R.drawable.loading_shape);
 
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
         cerrarSesion = rootView.findViewById(R.id.btn_configuracion);
         tv_nombre = rootView.findViewById(R.id.tv1_configuracion);
@@ -76,8 +84,7 @@ public class Configuracion extends Fragment {
             @Override
             public void onClick(View v) {
                 login1.changeEstado(rootView.getContext(), false);
-
-
+                FirebaseAuth.getInstance().signOut();
                 Intent i = new Intent(rootView.getContext(), StartActivity.class);
                 startActivity(i);
 
