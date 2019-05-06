@@ -14,7 +14,7 @@
         android:clipToPadding="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color4"
+        android:background="@color/colorFondo"
         >
 
     </android.support.v4.view.ViewPager>
@@ -23,7 +23,7 @@
         android:id="@+id/btn_contratar"
         android:text="Solicitar"
         android:textColor="#fff"
-        android:background="@drawable/round"
+        android:background="@drawable/round2"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:layout_alignParentBottom="true"

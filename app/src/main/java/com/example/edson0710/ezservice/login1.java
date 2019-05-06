@@ -34,6 +34,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,7 +43,7 @@ import java.util.HashMap;
 
 public class login1 extends AppCompatActivity {
     Button ingresar;
-    EditText correo, password;
+    MaterialEditText correo, password;
     RadioGroup radio;
     RadioButton radio1, radio2, radio_sesion;
     int type_obtener;

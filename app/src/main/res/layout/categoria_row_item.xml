@@ -3,15 +3,14 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="150dp"
-    android:layout_marginTop="10dp"
     android:padding="8dp"
-    android:background="@color/colorAccent"
+    android:background="@color/colorFondo"
     android:id="@+id/container">
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="match_parent"
-        android:background="@drawable/loading_shape"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
         android:id="@+id/categoria_imagen"/>
 
     <RelativeLayout
@@ -23,12 +22,14 @@
 
         <TextView
             android:id="@+id/categoria_nombre"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:text="Nombre Categoria"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
             android:textColor="#fff"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             />
         <TextView
@@ -38,9 +39,9 @@
             android:layout_height="wrap_content"
             android:text="ID"
             android:textColor="#fff"
-            android:textSize="30sp"
+            android:textSize="1sp"
             android:textStyle="bold"
-            android:layout_below="@id/categoria_nombre"/>
+            android:visibility="invisible"/>
 
 
 

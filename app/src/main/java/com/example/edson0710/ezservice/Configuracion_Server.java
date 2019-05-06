@@ -1,6 +1,8 @@
 package com.example.edson0710.ezservice;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,9 +33,22 @@ public class Configuracion_Server extends Fragment {
     String id, nombre, apellido, imagen, calificacion;
     Button cerrarSesion;
     TextView tv_nombre, tv_calificacion, tv_historial, tv_editar;
+    Switch disponibilidad;
     ImageView iv_imagen;
     private RequestOptions option;
+    int estado;
+    Boolean obtenerEstado;
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        obtenerEstado = obtenerSwitch();
+        if (obtenerEstado){
+            disponibilidad.setChecked(true);
+        } else {
+            disponibilidad.setChecked(false);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +64,7 @@ public class Configuracion_Server extends Fragment {
         tv_calificacion = rootView.findViewById(R.id.tv2_configuracion_server);
         iv_imagen = rootView.findViewById(R.id.iv_configuracion_server);
         tv_editar = rootView.findViewById(R.id.tv4_editar_server);
+        disponibilidad = rootView.findViewById(R.id.switch1);
 
 
         jsoncall();
@@ -81,6 +99,32 @@ public class Configuracion_Server extends Fragment {
 
             }
         });
+
+        obtenerEstado = obtenerSwitch();
+        /*if (obtenerEstado){
+            disponibilidad.setChecked(true);
+        } else {
+            disponibilidad.setChecked(false);
+        }
+*/
+
+        disponibilidad.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (disponibilidad.isChecked()){
+                    estado = 1;
+                    jsoncall2();
+                    guardarSwitch(true);
+                }
+                if (!disponibilidad.isChecked()){
+                    estado = 0;
+                    jsoncall2();
+                    guardarSwitch(false);
+                }
+            }
+        });
+
+
 
         return rootView;
 
@@ -120,4 +164,55 @@ public class Configuracion_Server extends Fragment {
         RequestQueue x = Volley.newRequestQueue(getContext());
         x.add(peticion);
     }
+    public void jsoncall2(){
+        String url = "http://ezservice.tech/update_disponibilidad.php?id=" + id + "&est=" + estado;
+
+        JsonObjectRequest peticion = new JsonObjectRequest
+                (
+                        Request.Method.GET,
+                        url,
+                        null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    String valor = response.getString("Estado");
+                                    switch (valor) {
+                                        case "OK":
+                                            //Toast.makeText(getContext(), "Usuario ya solicitado", Toast.LENGTH_SHORT).show();
+                                            break;
+                                        case "NO":
+                                            //Toast.makeText(getContext(), "Añadido con éxito", Toast.LENGTH_SHORT).show();
+                                            break;
+                                    }
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        , new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                });
+        RequestQueue x = Volley.newRequestQueue(getContext());
+        x.add(peticion);
+    }
+
+    public void guardarSwitch(boolean my_switch) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor myEditor = preferences.edit();
+        myEditor.putBoolean("switch", my_switch);
+        myEditor.commit();
+    }
+
+    public boolean obtenerSwitch() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        boolean id_preference = preferences.getBoolean("switch", true);
+        return id_preference;
+
+    }
+
 }

@@ -1,37 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorFondo"
     android:orientation="vertical"
     tools:context=".login1">
 
-    <ImageView
-        android:layout_width="163dp"
-        android:layout_height="135dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/icono1"
 
-        />
-
-    <EditText
-        android:layout_gravity="center"
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:layout_marginTop="35dp"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textCursorDrawable="@color/colorPrimary"
+        android:cursorVisible="true"
+        android:layout_marginLeft="30dp"
+        app:met_floatingLabel="normal"
+        app:met_textColor="#fff"
+        app:met_textColorHint="#9e9e9e"
+        app:met_underlineColor="#fff"
+        app:met_floatingLabelTextColor="#fff"
+        app:met_baseColor="#fff"
+        app:met_helperTextColor="#fff"
         android:hint="Correo electrónico"
-        android:inputType="text"
+        android:inputType="textEmailAddress"
         android:id="@+id/login1_et_correo"
+        android:layout_centerHorizontal="true"
         />
 
-    <EditText
-        android:layout_gravity="center"
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:layout_marginTop="20dp"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:met_floatingLabelTextColor="#fff"
+        android:cursorVisible="true"
+        android:textCursorDrawable="@color/colorPrimary"
+        android:layout_below="@+id/login1_et_correo"
+        app:met_floatingLabel="normal"
+        app:met_textColor="#fff"
+        app:met_textColorHint="#9e9e9e"
+        app:met_baseColor="#fff"
+        app:met_helperTextColor="#fff"
+        app:met_underlineColor="#fff"
+        android:layout_marginLeft="30dp"
         android:hint="Contraseña"
+        android:layout_centerHorizontal="true"
         android:inputType="textPassword"
         android:id="@+id/login1_et_password"
         />
@@ -40,14 +54,18 @@
         android:id="@+id/radio_sesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColorHint="#eeeeee"
         android:textSize="13sp"
-        android:layout_marginLeft="41dp"
+        android:buttonTint="@color/colorPrimary"
+        android:layout_below="@+id/login1_et_password"
+        android:layout_alignStart="@+id/login1_et_password"
         android:hint="Mantener sesión" />
 
 
 
 
     <RadioGroup
+        android:layout_below="@+id/radio_sesion"
         android:id="@+id/rgroup"
         android:orientation="horizontal"
         android:gravity="center"
@@ -58,13 +76,18 @@
         <RadioButton
             android:id="@+id/radio1"
             android:text="Comun"
+            android:buttonTint="@color/colorPrimary"
+            android:textColor="#eeeeee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"/>
 
         <RadioButton
+            android:layout_marginLeft="30dp"
             android:id="@+id/radio2"
             android:text="Servidor"
+            android:buttonTint="@color/colorPrimary"
+            android:textColor="#eeeeee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -72,11 +95,16 @@
 
     <Button
         android:id="@+id/login1_btn_iniciar"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/round2"
         android:text="Iniciar"
+        android:textColor="#fff"
         android:textStyle="bold" />
 
 
@@ -84,4 +112,4 @@
 
 
 
-</LinearLayout>
+</RelativeLayout>

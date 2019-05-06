@@ -12,10 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="450dp"
         app:cardCornerRadius="20dp"
+        android:background="@color/colorPrimary"
         android:layout_margin="8dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
+            android:background="@color/colorPrimary"
             android:layout_height="450dp">
 
             <LinearLayout
@@ -49,6 +51,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
+                android:textColor="#fff"
                 android:text="Calificacion" />
 
             <TextView
@@ -60,6 +63,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="3dp"
+                android:textColor="#fff"
                 android:text="Nombre" />
 
             <TextView
@@ -70,6 +74,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="3dp"
+                android:textColor="#fff"
                 android:gravity="center"
                 android:text="Edad" />
 
@@ -83,6 +88,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="3dp"
                 android:drawablePadding="10dp"
+                android:textColor="#fff"
                 android:ellipsize="end"
                 android:maxLines="3"
                 android:text="Descripción" />
@@ -91,7 +97,7 @@
                 android:id="@+id/btn_comentarios"
                 android:text="Comentarios"
                 android:textColor="#fff"
-                android:background="@drawable/round2"
+                android:background="@drawable/round"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
                 android:layout_alignParentBottom="true"

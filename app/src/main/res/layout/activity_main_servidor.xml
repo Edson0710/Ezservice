@@ -19,6 +19,7 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs_server"
             android:layout_width="match_parent"
+            app:tabIndicatorColor="@color/colorFondo"
             android:layout_height="wrap_content">
 
             <android.support.design.widget.TabItem

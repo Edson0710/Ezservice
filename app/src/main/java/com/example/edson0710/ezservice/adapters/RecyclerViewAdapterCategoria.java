@@ -17,6 +17,8 @@ import com.example.edson0710.ezservice.R;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class RecyclerViewAdapterCategoria extends RecyclerView.Adapter<RecyclerViewAdapterCategoria.MyViewHolder> {
 
@@ -67,7 +69,7 @@ public class RecyclerViewAdapterCategoria extends RecyclerView.Adapter<RecyclerV
 
         //Load image from Internet
 
-        Glide.with(mContext).load(mData.get(position).getImagen_url()).apply(option).into(holder.iv_imagen);
+        Glide.with(mContext).load(mData.get(position).getImagen_url()).apply(option.circleCropTransform()).into(holder.iv_imagen);
 
 
     }
@@ -81,7 +83,7 @@ public class RecyclerViewAdapterCategoria extends RecyclerView.Adapter<RecyclerV
 
         TextView tv_id;
         TextView tv_nombre;
-        ImageView iv_imagen;
+        CircleImageView iv_imagen;
         LinearLayout container;
 
         public MyViewHolder(View itemView) {

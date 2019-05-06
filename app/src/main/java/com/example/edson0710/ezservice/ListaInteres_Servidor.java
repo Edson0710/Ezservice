@@ -22,9 +22,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.edson0710.ezservice.Notifications.Token;
 import com.example.edson0710.ezservice.adapters.RecyclerViewAdapterLista;
 import com.example.edson0710.ezservice.adapters.RecyclerViewAdapterListaServidor;
 import com.example.edson0710.ezservice.models.Lista;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,6 +51,7 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
     ArrayList<Lista> listaInter;
     RecyclerViewAdapterListaServidor myadapter = new RecyclerViewAdapterListaServidor(getContext(), listaInter);
     int id_uc, estado;
+    FirebaseUser firebaseUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,11 +66,8 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
         //Recieve data
         //id = getIntent().getExtras().getInt("id");
         JSON_URL = "http://ezservice.tech/lista_interes_servidor.php?cat=" + id_us;
-        //ini views
-        //TextView tv_prueba = findViewById(R.id.textoprueba);
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        //setting values
-        //tv_prueba.setText(""+id);
 
         jsoncall();
 
@@ -84,6 +88,8 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
 
             }
         });
+
+        updateToken(FirebaseInstanceId.getInstance().getToken());
 
         return rootView;
     }
@@ -235,7 +241,9 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
         x.add(peticion);
     }
 
-    public void jsoncall3() {
-
+    private void updateToken(String token){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token1 = new Token(token);
+        reference.child(firebaseUser.getUid()).setValue(token1);
     }
 }

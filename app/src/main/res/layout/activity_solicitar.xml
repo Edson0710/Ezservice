@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/colorFondo"
     android:layout_height="match_parent"
     tools:context=".Solicitar">
 
@@ -11,14 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Solicitar"
+        android:textColor="#fff"
         android:gravity="center"
         android:textSize="40sp"/>
 
     <Button
         android:id="@+id/btn_solicitar"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_solicitar"
+        android:layout_marginLeft="150dp"
+        android:textColor="#fff"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:text="Buscar"

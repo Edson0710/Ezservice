@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorFondo"
     tools:context=".Configuracion">
 
     <ImageView
@@ -23,7 +24,7 @@
         android:layout_below="@+id/iv_configuracion_server"
         android:gravity="center"
         android:text="Nombre"
-        android:textColor="#000"
+        android:textColor="#fff"
         android:textStyle="bold"
         android:textSize="20sp" />
 
@@ -34,6 +35,7 @@
         android:layout_marginTop="5dp"
         android:layout_below="@+id/tv1_configuracion_server"
         android:gravity="center"
+        android:textColor="#Fff"
         android:text="X.X"
         android:textSize="15sp" />
 
@@ -46,7 +48,7 @@
         android:layout_marginTop="245dp"
         android:paddingLeft="30dp"
         android:text="Historial"
-        android:textColor="#000"
+        android:textColor="#fff"
         android:textSize="20sp" />
 
     <TextView
@@ -54,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:textColor="#000"
+        android:textColor="#fff"
         android:layout_below="@+id/tv3_historial_server"
         android:layout_centerVertical="true"
         android:paddingLeft="30dp"
@@ -64,22 +66,28 @@
 
     <Button
         android:id="@+id/btn_configuracion_server"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="110dp"
+        android:layout_marginRight="110dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="83dp"
-        android:hint="Cerrar sesion" />
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/round2"
+        android:textColor="#fff"
+        android:text="Cerrar sesion" />
 
     <Switch
         android:id="@+id/switch1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:checked="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tv4_editar_server"
         android:layout_marginTop="20dp"
         android:layout_marginStart="30dp"
         android:text="Disponibilidad"
+        android:textColor="#fff"
         android:textSize="20sp" />
 
 

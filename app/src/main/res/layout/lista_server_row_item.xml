@@ -5,7 +5,7 @@
     android:layout_height="115dp"
     android:layout_marginTop="5dp"
     android:padding="8dp"
-    android:background="@color/colorAccent"
+    android:background="@color/colorFondo"
     android:id="@+id/container_lista2">
 
 

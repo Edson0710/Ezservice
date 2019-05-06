@@ -53,7 +53,6 @@ public class RecyclerViewAdapterLista extends RecyclerView.Adapter<RecyclerViewA
                 String id_firebase = mData2.get(viewHolder.getAdapterPosition()).getId_firebase();
                 String imagenURL = mData2.get(viewHolder.getAdapterPosition()).getImagen();
                 Toast.makeText(mContext2, "Seleccionaste: "+prueba, Toast.LENGTH_SHORT).show();
-                Toast.makeText(mContext2, "Seleccionaste: "+id_firebase, Toast.LENGTH_SHORT).show();
                 if (prueba.equals("Aceptado")){
                     Intent intent = new Intent(mContext2, MessageActivity.class);
                     intent.putExtra("userid", id_firebase);

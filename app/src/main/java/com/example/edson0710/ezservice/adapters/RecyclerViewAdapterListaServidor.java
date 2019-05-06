@@ -47,11 +47,12 @@ public class RecyclerViewAdapterListaServidor extends RecyclerView.Adapter<Recyc
             public void onClick(View v) {
                 String prueba = mData2.get(viewHolder.getAdapterPosition()).getEstado();
                 String id_firebase = mData2.get(viewHolder.getAdapterPosition()).getId_firebase();
+                String imagenURL = mData2.get(viewHolder.getAdapterPosition()).getImagen();
                 Toast.makeText(mContext2, "Seleccionaste: "+prueba, Toast.LENGTH_SHORT).show();
-                Toast.makeText(mContext2, "Seleccionaste: "+id_firebase, Toast.LENGTH_SHORT).show();
                 if (prueba.equals("Aceptado")){
                     Intent intent = new Intent(mContext2, MessageActivity.class);
                     intent.putExtra("userid", id_firebase);
+                    intent.putExtra("imagenURL", imagenURL);
                     mContext2.startActivity(intent);
                 }
             }
