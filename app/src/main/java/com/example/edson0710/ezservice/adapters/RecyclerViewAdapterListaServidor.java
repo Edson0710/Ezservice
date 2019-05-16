@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.edson0710.ezservice.Calificar_comun;
 import com.example.edson0710.ezservice.MessageActivity;
 import com.example.edson0710.ezservice.R;
 import com.example.edson0710.ezservice.models.Lista;
@@ -24,10 +25,12 @@ public class RecyclerViewAdapterListaServidor extends RecyclerView.Adapter<Recyc
     private Context mContext2;
     private List<Lista> mData2;
     private RequestOptions option3;
+    String id_uc;
 
-    public RecyclerViewAdapterListaServidor(Context mContext2, List<Lista> mData2) {
+    public RecyclerViewAdapterListaServidor(Context mContext2, List<Lista> mData2, String id_uc) {
         this.mContext2 = mContext2;
         this.mData2 = mData2;
+        this.id_uc = id_uc;
 
         //Request option for Glide
 
@@ -48,11 +51,26 @@ public class RecyclerViewAdapterListaServidor extends RecyclerView.Adapter<Recyc
                 String prueba = mData2.get(viewHolder.getAdapterPosition()).getEstado();
                 String id_firebase = mData2.get(viewHolder.getAdapterPosition()).getId_firebase();
                 String imagenURL = mData2.get(viewHolder.getAdapterPosition()).getImagen();
+                double telefono = mData2.get(viewHolder.getAdapterPosition()).getTelefono();
+                int id_us = mData2.get(viewHolder.getAdapterPosition()).getId_us();
                 Toast.makeText(mContext2, "Seleccionaste: "+prueba, Toast.LENGTH_SHORT).show();
                 if (prueba.equals("Aceptado")){
                     Intent intent = new Intent(mContext2, MessageActivity.class);
                     intent.putExtra("userid", id_firebase);
                     intent.putExtra("imagenURL", imagenURL);
+                    intent.putExtra("telefono", telefono);
+                    intent.putExtra("id_uc", id_uc);
+                    intent.putExtra("id_us", id_us);
+                    mContext2.startActivity(intent);
+                }
+                if (prueba.equals("Finalizando")){
+                    Intent intent = new Intent(mContext2, Calificar_comun.class);
+                    intent.putExtra("userid", id_firebase);
+                    intent.putExtra("imagenURL", imagenURL);
+                    intent.putExtra("telefono", telefono);
+                    intent.putExtra("id_uc", id_uc);
+                    intent.putExtra("estado", prueba);
+                    intent.putExtra("id_us", id_us);
                     mContext2.startActivity(intent);
                 }
             }

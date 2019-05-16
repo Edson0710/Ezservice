@@ -1,11 +1,20 @@
 package com.example.edson0710.ezservice;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,7 +55,7 @@ public class MessageActivity extends AppCompatActivity {
 
     CircleImageView profile_image;
     TextView username;
-    Button button;
+    Button button, llamada;
 
     FirebaseUser firebaseUser;
     DatabaseReference reference;
@@ -66,8 +75,22 @@ public class MessageActivity extends AppCompatActivity {
     ValueEventListener seenListener;
 
     APIService apiService;
+    int tipo;
 
     boolean notify = false;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        final String estado = getIntent().getExtras().getString("estado");
+        tipo = obtenerTipo();
+        if (tipo == 2){
+            button.setVisibility(View.INVISIBLE);
+            if (estado.equals("Finalizando")){
+                button.setVisibility(View.VISIBLE);
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +101,7 @@ public class MessageActivity extends AppCompatActivity {
         profile_image = findViewById(R.id.profile_image);
         username = findViewById(R.id.profile_username);
         button = findViewById(R.id.back);
+        llamada = findViewById(R.id.phone);
         btn_send = findViewById(R.id.btn_send);
         text_send = findViewById(R.id.text_send);
 
@@ -92,18 +116,49 @@ public class MessageActivity extends AppCompatActivity {
         intent = getIntent();
         final String userid = intent.getStringExtra("userid");
         final String imagenURL = intent.getStringExtra("imagenURL");
+        final double telefono = getIntent().getExtras().getDouble("telefono");
+        final String id_uc = getIntent().getExtras().getString("id_uc");
+        final int id_us = getIntent().getExtras().getInt("id_us");
 
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 notify = true;
                 String msg = text_send.getText().toString();
-                if(!msg.equals("")){
+                if (!msg.equals("")) {
                     sendMessage(firebaseUser.getUid(), userid, msg);
-                }else {
+                } else {
                     Toast.makeText(MessageActivity.this, "You can't send empty message", Toast.LENGTH_SHORT).show();
                 }
                 text_send.setText("");
+            }
+        });
+
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tipo == 2){
+                    Intent intent = new Intent(MessageActivity.this, Calificar_comun.class);
+                    intent.putExtra("id_uc", id_uc);
+                    intent.putExtra("id_us", id_us);
+                    startActivity(intent);
+                }
+                if (tipo==1) {
+                    Intent intent = new Intent(MessageActivity.this, Calificar.class);
+                    intent.putExtra("id_uc", id_uc);
+                    intent.putExtra("id_us", id_us);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        llamada.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+telefono));
+                startActivity(intent);
             }
         });
 
@@ -113,12 +168,6 @@ public class MessageActivity extends AppCompatActivity {
 
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -262,6 +311,12 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public int obtenerTipo() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MessageActivity.this);
+        int type_preference = preferences.getInt("TIPO", 1);
+        return type_preference;
     }
 
 

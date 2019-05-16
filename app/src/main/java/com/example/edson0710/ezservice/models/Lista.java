@@ -1,12 +1,14 @@
 package com.example.edson0710.ezservice.models;
 
 public class Lista {
-    String nombre, profesion, imagen, estado, id_firebase, username;
+    String nombre, profesion, imagen, estado, id_firebase, username ;
     int id, id_us;
+    double telefono;
 
     public Lista(){
     }
-    public Lista(String nombre, String profesion, String imagen, int id, int id_us, String estado, String id_firebase, String username) {
+    public Lista(String nombre, String profesion, String imagen, int id, int id_us, String estado, String id_firebase, String username,
+                 double telefono) {
         this.nombre = nombre;
         this.profesion = profesion;
         this.imagen = imagen;
@@ -15,6 +17,7 @@ public class Lista {
         this.estado = estado;
         this.id_firebase = id_firebase;
         this.username = username;
+        this.telefono = telefono;
     }
 
     public String getNombre() {
@@ -79,5 +82,13 @@ public class Lista {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public double getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(double telefono) {
+        this.telefono = telefono;
     }
 }

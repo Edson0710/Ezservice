@@ -109,26 +109,26 @@ public class Configuracion extends Fragment {
                                     nombre = response.getString("nombre");
                                     apellido = response.getString("apellido");
                                     calificacion = response.getString("calificacion");
-                                    imagen = response.getString("imagen");
+                              imagen = response.getString("imagen");
                                     tv_nombre.setText(nombre + " " + apellido);
                                     tv_calificacion.setText(calificacion);
                                     Glide.with(getContext()).load(imagen).apply(option.circleCropTransform()).into(iv_imagen);
 
 
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                        , new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), "Error php", Toast.LENGTH_SHORT).show();
-                    }
-                });
+} catch (JSONException e) {
+        e.printStackTrace();
+        }
+        }
+        }
+        , new Response.ErrorListener() {
+@Override
+public void onErrorResponse(VolleyError error) {
+        Toast.makeText(getContext(), "Error php", Toast.LENGTH_SHORT).show();
+        }
+        });
         RequestQueue x = Volley.newRequestQueue(getContext());
         x.add(peticion);
-    }
+        }
 
 
-}
+        }

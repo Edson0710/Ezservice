@@ -3,6 +3,7 @@
     package="com.example.edson0710.ezservice">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -37,25 +38,24 @@
         <activity android:name=".ListaInteres_Servidor" />
         <activity android:name=".EditarPerfil" />
         <activity android:name=".login1" />
-        <activity android:name=".MessageActivity"></activity>
+        <activity android:name=".MessageActivity" />
 
-
-        <service android:name=".Notifications.MyFirebaseIdService"
+        <service
+            android:name=".Notifications.MyFirebaseIdService"
             android:enabled="true"
             android:exported="true">
-
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".Notifications.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-
+        <activity android:name=".Calificar" />
+        <activity android:name=".Calificar_comun"></activity>
     </application>
 
 </manifest>

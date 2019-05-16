@@ -26,10 +26,10 @@ public class StartActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        if (obtenerEstado()) {
-            firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-            String id_obtener = obtenerId();
-            if (firebaseUser != null) {
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String id_obtener = obtenerId();
+        if (firebaseUser != null) {
+            if (obtenerEstado()) {
                 type_obtener = obtenerTipo();
                 if (type_obtener == 1) {
                     Intent iniciarAdmin = new Intent(StartActivity.this, MainActivity.class);
@@ -87,6 +87,7 @@ public class StartActivity extends AppCompatActivity {
         });
 
     }
+
     @Override
     public void onBackPressed() {
 

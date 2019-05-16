@@ -50,7 +50,7 @@ public class ListaInteres extends Fragment {
     private RequestQueue requestQueue;
     RecyclerView recycler;
     ArrayList<Lista> listaInter;
-    RecyclerViewAdapterLista myadapter = new RecyclerViewAdapterLista(getContext(), listaInter);
+    RecyclerViewAdapterLista myadapter = new RecyclerViewAdapterLista(getContext(), listaInter, id_uc);
     int id_us;
     FirebaseUser firebaseUser;
 
@@ -112,6 +112,7 @@ public class ListaInteres extends Fragment {
                         lista.setId_us(jsonObject.getInt("id_us"));
                         lista.setEstado(jsonObject.getString("estado"));
                         lista.setId_firebase(jsonObject.getString("id_firebase"));
+                        lista.setTelefono(jsonObject.getDouble("telefono"));
 
                         listaInter.add(lista);
 
@@ -144,7 +145,7 @@ public class ListaInteres extends Fragment {
     public void setuprecyclerview2(List<Lista> listaInter) {
         recycler.addItemDecoration(new DivideRecycler(getResources()));
         LinearLayoutManager mLayouyManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        RecyclerViewAdapterLista myadapter = new RecyclerViewAdapterLista(getContext(), listaInter);
+        RecyclerViewAdapterLista myadapter = new RecyclerViewAdapterLista(getContext(), listaInter, id_uc);
         recycler.setLayoutManager(mLayouyManager2);
         recycler.setAdapter(myadapter);
         myadapter.notifyDataSetChanged();

@@ -2,8 +2,11 @@ package com.example.edson0710.ezservice;
 
 import android.animation.ArgbEvaluator;
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -40,6 +43,7 @@ public class TarjetasServidores extends AppCompatActivity {
     CardViewAdapterTarjeta adapter;
     List<TarjetaUsuario> models;
     Button solicitar;
+    FloatingActionButton home;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +53,22 @@ public class TarjetasServidores extends AppCompatActivity {
         id_uc = getIntent().getExtras().getString("id_uc");
 
         JSON_URL = "http://ezservice.tech/mostrar_servidores.php?cat=" + id;
-        solicitar = (Button) findViewById(R.id.btn_contratar);
+        solicitar =  findViewById(R.id.btn_contratar);
+        home = findViewById(R.id.floating_btn);
 
         models = new ArrayList<>();
         jsoncall();
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TarjetasServidores.this, MainActivity.class);
+                intent.putExtra("id", id_uc);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 
         solicitar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +110,21 @@ public class TarjetasServidores extends AppCompatActivity {
                     }
 
 
+                }
+                if(models == null || models.size() == 0){
+                    AlertDialog.Builder myBuild = new AlertDialog.Builder(TarjetasServidores.this);
+                    myBuild.setMessage("No hay usuarios disponibles por el momento...");
+                    myBuild.setTitle("Ezservice");
+                    myBuild.setCancelable(false);
+                    myBuild.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+
+                    AlertDialog dialog = myBuild.create();
+                    dialog.show();
                 }
 
                 setupadapter(models);

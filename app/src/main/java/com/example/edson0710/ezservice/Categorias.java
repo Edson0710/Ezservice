@@ -82,7 +82,7 @@ public class Categorias extends AppCompatActivity {
     }
 
     public void setuprecyclerview(List<Categoria> lista) {
-        recycler = (RecyclerView) findViewById(R.id.recyclerview_categorias);
+        recycler = findViewById(R.id.recyclerview_categorias);
         recycler.addItemDecoration(new DivideRecycler(getResources()));
         RecyclerViewAdapterCategoria myadapter = new RecyclerViewAdapterCategoria(this, lista, id_uc);
         LinearLayoutManager mLayouyManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

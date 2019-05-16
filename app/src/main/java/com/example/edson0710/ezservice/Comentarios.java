@@ -64,7 +64,7 @@ public class Comentarios extends AppCompatActivity {
                     try {
                         jsonObject = response.getJSONObject(i);
                         Comentario comentario = new Comentario();
-                        comentario.setComentario(jsonObject.getString("comentario"));
+                        comentario.setComentario(jsonObject.getString("comentario_servidor"));
                         comentario.setFecha(jsonObject.getString("fecha"));
 
                         lista2.add(comentario);
