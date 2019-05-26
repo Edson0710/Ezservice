@@ -28,14 +28,16 @@ public class RecyclerViewAdapterCategoria extends RecyclerView.Adapter<RecyclerV
     String id_uc;
     double latitud, longitud;
     int distancia;
+    float calificacion;
 
-    public RecyclerViewAdapterCategoria(Context mContext, List<Categoria> mData, String id_uc, double latitud, double longitud, int distancia) {
+    public RecyclerViewAdapterCategoria(Context mContext, List<Categoria> mData, String id_uc, double latitud, double longitud, int distancia, float calificacion) {
         this.mContext = mContext;
         this.mData = mData;
         this.id_uc = id_uc;
         this.latitud = latitud;
         this.longitud = longitud;
         this.distancia = distancia;
+        this.calificacion = calificacion;
 
         //Request option for Glide
 
@@ -60,6 +62,7 @@ public class RecyclerViewAdapterCategoria extends RecyclerView.Adapter<RecyclerV
                 i.putExtra("latitud", latitud);
                 i.putExtra("longitud", longitud);
                 i.putExtra("distancia", distancia);
+                i.putExtra("calificacion", calificacion);
                 mContext.startActivity(i);
             }
         });

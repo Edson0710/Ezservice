@@ -47,6 +47,7 @@ public class TarjetasServidores extends AppCompatActivity {
     FloatingActionButton home;
     double latitud, longitud;
     int distancia;
+    float calificacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +58,12 @@ public class TarjetasServidores extends AppCompatActivity {
         latitud = getIntent().getExtras().getDouble("latitud");
         longitud = getIntent().getExtras().getDouble("longitud");
         distancia = getIntent().getExtras().getInt("distancia");
-        Toast.makeText(TarjetasServidores.this, "d: " + distancia, Toast.LENGTH_SHORT).show();
-
+        calificacion = getIntent().getExtras().getFloat("calificacion");
+        Toast.makeText(TarjetasServidores.this, "c: " + calificacion, Toast.LENGTH_SHORT).show();
 
 
         JSON_URL = "http://ezservice.tech/mostrar_servidores.php?cat=" + id;
-        solicitar =  findViewById(R.id.btn_contratar);
+        solicitar = findViewById(R.id.btn_contratar);
         home = findViewById(R.id.floating_btn);
 
         models = new ArrayList<>();
@@ -122,17 +123,18 @@ public class TarjetasServidores extends AppCompatActivity {
                         float distance = locationA.distanceTo(locationB);
                         distance = distance / 1000;
 
-                        if (distance <= distancia) {
-                            models.add(tarjetaUsuario);
+                        if (tarjetaUsuario.getCalificacion() >= calificacion) {
+                            if (distance <= distancia) {
+                                models.add(tarjetaUsuario);
+                            }
                         }
-
                     } catch (JSONException e) {
                         e.getCause();
                     }
 
 
                 }
-                if(models == null || models.size() == 0){
+                if (models == null || models.size() == 0) {
                     AlertDialog.Builder myBuild = new AlertDialog.Builder(TarjetasServidores.this);
                     myBuild.setMessage("No hay usuarios disponibles por el momento ó intenta con otros filtros");
                     myBuild.setTitle("Ezservice");

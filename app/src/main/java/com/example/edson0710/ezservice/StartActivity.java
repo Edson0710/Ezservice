@@ -1,9 +1,11 @@
 package com.example.edson0710.ezservice;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +14,7 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class StartActivity extends AppCompatActivity {
+public class StartActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback{
 
     Button login, register;
     int type_obtener;
@@ -25,6 +27,8 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        ActivityCompat.requestPermissions(StartActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String id_obtener = obtenerId();
@@ -51,23 +55,6 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-
-        /*if (obtenerEstado()) {
-            String id_obtener = obtenerId();
-            type_obtener = obtenerTipo();
-            if (type_obtener == 1) {
-                Intent iniciarAdmin = new Intent(StartActivity.this, MainActivity.class);
-                iniciarAdmin.putExtra("id", id_obtener);
-                startActivity(iniciarAdmin);
-                finish();
-            }
-            if (type_obtener == 2) {
-                Intent iniciarAdmin = new Intent(StartActivity.this, MainServidor.class);
-                iniciarAdmin.putExtra("id", id_obtener);
-                startActivity(iniciarAdmin);
-                finish();
-            }
-        }*/
 
         login = findViewById(R.id.login);
         register = findViewById(R.id.register);

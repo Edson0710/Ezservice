@@ -35,6 +35,7 @@ public class Categorias extends AppCompatActivity {
     String id_uc;
     double latitud, longitud;
     int distancia;
+    float calificacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,8 @@ public class Categorias extends AppCompatActivity {
         latitud = getIntent().getExtras().getDouble("latitud");
         longitud = getIntent().getExtras().getDouble("longitud");
         distancia = getIntent().getExtras().getInt("distancia");
-        Toast.makeText(Categorias.this, "d: " + distancia, Toast.LENGTH_SHORT).show();
+        calificacion = getIntent().getExtras().getFloat("calificacion");
+        Toast.makeText(Categorias.this, "c: " + calificacion, Toast.LENGTH_SHORT).show();
         setContentView(R.layout.activity_categorias);
         lista = new ArrayList<>();
         jsoncall();
@@ -91,7 +93,7 @@ public class Categorias extends AppCompatActivity {
     public void setuprecyclerview(List<Categoria> lista) {
         recycler = findViewById(R.id.recyclerview_categorias);
         recycler.addItemDecoration(new DivideRecycler(getResources()));
-        RecyclerViewAdapterCategoria myadapter = new RecyclerViewAdapterCategoria(this, lista, id_uc, latitud, longitud, distancia);
+        RecyclerViewAdapterCategoria myadapter = new RecyclerViewAdapterCategoria(this, lista, id_uc, latitud, longitud, distancia, calificacion);
         LinearLayoutManager mLayouyManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
         recycler.setLayoutManager(mLayouyManager);

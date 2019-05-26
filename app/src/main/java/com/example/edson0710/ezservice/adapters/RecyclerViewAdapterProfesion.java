@@ -28,14 +28,16 @@ public class RecyclerViewAdapterProfesion extends RecyclerView.Adapter<RecyclerV
     String id_uc;
     double latitud, longitud;
     int distancia;
+    float calificacion;
 
-    public RecyclerViewAdapterProfesion(Context mContext2, List<Profesion> mData2, String id_uc, double latitud, double longitud, int distancia) {
+    public RecyclerViewAdapterProfesion(Context mContext2, List<Profesion> mData2, String id_uc, double latitud, double longitud, int distancia, float calificacion) {
         this.mContext2 = mContext2;
         this.mData2 = mData2;
         this.id_uc = id_uc;
         this.latitud = latitud;
         this.longitud = longitud;
         this.distancia = distancia;
+        this.calificacion = calificacion;
     }
 
     @Override
@@ -54,6 +56,7 @@ public class RecyclerViewAdapterProfesion extends RecyclerView.Adapter<RecyclerV
                 i.putExtra("latitud", latitud);
                 i.putExtra("longitud", longitud);
                 i.putExtra("distancia", distancia);
+                i.putExtra("calificacion", calificacion);
                 mContext2.startActivity(i);
             }
         });
