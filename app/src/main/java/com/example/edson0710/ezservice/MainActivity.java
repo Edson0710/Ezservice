@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity  {
 
     String id, id_firebase = "f";
     String url2;
-    int type_obtener;
+    int type_obtener, n_servicios;
 
     FirebaseUser firebaseUser;
     DatabaseReference reference;
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
 
         id = getIntent().getExtras().getString("id");
+        n_servicios = getIntent().getExtras().getInt("n_servicios");
 
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -140,6 +141,7 @@ public class MainActivity extends AppCompatActivity  {
         public Fragment getItem(int position) {
             Bundle bundle = new Bundle();
             bundle.putString("id", id);
+            bundle.putInt("n_servicios", n_servicios);
             switch (position) {
                 case 0:
                     Solicitar soli = new Solicitar();

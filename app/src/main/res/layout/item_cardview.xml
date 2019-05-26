@@ -2,12 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/colorFondo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     >
 
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/contador"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:text="1 de 1"
+        />
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="450dp"

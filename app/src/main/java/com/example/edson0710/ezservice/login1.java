@@ -47,7 +47,7 @@ public class login1 extends AppCompatActivity {
     RadioGroup radio;
     RadioButton radio1, radio2, radio_sesion;
     int type_obtener;
-    int estado_firebase;
+    int estado_firebase, n_servicios;
 
     String url2;
     String id;
@@ -102,7 +102,6 @@ public class login1 extends AppCompatActivity {
                 pass = password.getText().toString();
                 guardarEstado();
                 if (radio1.isChecked()) {
-                    //tv_registrar.setText("Usuario comun");
                     String url = "http://ezservice.tech/loginuser.php?usu=" + correo.getText().toString() + "&cont=" + password.getText().toString();
                     final Intent iniciarAdmin = new Intent(login1.this, MainActivity.class);
                     JsonObjectRequest peticion = new JsonObjectRequest
@@ -122,6 +121,7 @@ public class login1 extends AppCompatActivity {
                                                         id = response.getString("id");
                                                         estado_firebase = response.getInt("estado_firebase");
                                                         username = response.getString("nombre");
+                                                        n_servicios = response.getInt("n_servicios");
                                                         if(estado_firebase==0){
                                                             jsconcall_estado();
                                                             register(username, email, pass);
@@ -137,6 +137,7 @@ public class login1 extends AppCompatActivity {
                                                                             guardarId(id);
                                                                             guardarTipo(type_obtener);
                                                                             intent.putExtra("id", id);
+                                                                            intent.putExtra("n_servicios", n_servicios);
                                                                             Toast.makeText(login1.this, "All is fine", Toast.LENGTH_SHORT).show();
                                                                             startActivity(intent);
                                                                             finish();
@@ -167,7 +168,6 @@ public class login1 extends AppCompatActivity {
                 }
 
                 if (radio2.isChecked()) {
-                    //tv_registrar.setText("Usuario Servidor");
                     String url = "http://ezservice.tech/loginserver.php?usu=" + correo.getText().toString() + "&cont=" + password.getText().toString();
                     final Intent iniciar = new Intent(login1.this, MainServidor.class);
                     JsonObjectRequest peticion = new JsonObjectRequest
@@ -290,6 +290,7 @@ public class login1 extends AppCompatActivity {
                                         guardarId(id);
                                         guardarTipo(type_obtener);
                                         intent.putExtra("id", id);
+                                        intent.putExtra("n_servicios", n_servicios);
                                         startActivity(intent);
                                         finish();
                                         Toast.makeText(login1.this, "", Toast.LENGTH_SHORT).show();

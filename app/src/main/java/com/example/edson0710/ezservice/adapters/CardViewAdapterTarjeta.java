@@ -60,6 +60,7 @@ public class CardViewAdapterTarjeta extends PagerAdapter {
         ImageView imagen;
         TextView nombre, edad, calificacion, descripcion;
         Button comentarios;
+        TextView contador;
 
         imagen = view.findViewById(imagen_cardview);
         nombre = view.findViewById(R.id.nombre_cardview);
@@ -67,8 +68,9 @@ public class CardViewAdapterTarjeta extends PagerAdapter {
         edad = view.findViewById(R.id.edad_cardview);
         calificacion = view.findViewById(R.id.calificacion_cardview);
         comentarios = view.findViewById(R.id.btn_comentarios);
+        contador = view.findViewById(R.id.contador);
 
-
+        contador.setText(position+1 + " de " + models.size());
         nombre.setText(models.get(position).getNombre());
         descripcion.setText(models.get(position).getDescripcion());
         edad.setText("" + models.get(position).getEdad());
