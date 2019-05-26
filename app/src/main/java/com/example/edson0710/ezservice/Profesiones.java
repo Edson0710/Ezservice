@@ -29,6 +29,8 @@ public class Profesiones extends AppCompatActivity {
     private RequestQueue requestQueue;
     private List<Profesion> lista2;
     private RecyclerView recycler2;
+    double latitud, longitud;
+    int distancia;
 
 
     @Override
@@ -39,6 +41,10 @@ public class Profesiones extends AppCompatActivity {
         //Recieve data
         id = getIntent().getExtras().getInt("id");
         id_uc = getIntent().getExtras().getString("id_uc");
+        latitud = getIntent().getExtras().getDouble("latitud");
+        longitud = getIntent().getExtras().getDouble("longitud");
+        distancia = getIntent().getExtras().getInt("distancia");
+        Toast.makeText(Profesiones.this, "d: " + distancia, Toast.LENGTH_SHORT).show();
 
         JSON_URL = "http://ezservice.tech/profesiones.php?cat=" + id;
         //ini views
@@ -96,7 +102,7 @@ public class Profesiones extends AppCompatActivity {
     public void setuprecyclerview2(List<Profesion> lista2) {
         recycler2 = (RecyclerView) findViewById(R.id.recyclerview_profesiones);
         recycler2.addItemDecoration(new DivideRecycler(getResources()));
-        RecyclerViewAdapterProfesion myadapter2 = new RecyclerViewAdapterProfesion(this, lista2, id_uc);
+        RecyclerViewAdapterProfesion myadapter2 = new RecyclerViewAdapterProfesion(this, lista2, id_uc, latitud, longitud, distancia);
         LinearLayoutManager mLayouyManager2 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recycler2.setLayoutManager(mLayouyManager2);
         recycler2.setAdapter(myadapter2);

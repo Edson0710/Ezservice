@@ -26,16 +26,16 @@ public class RecyclerViewAdapterProfesion extends RecyclerView.Adapter<RecyclerV
     private List<Profesion> mData2;
     private RequestOptions option2;
     String id_uc;
+    double latitud, longitud;
+    int distancia;
 
-    public RecyclerViewAdapterProfesion(Context mContext2, List<Profesion> mData2, String id_uc) {
+    public RecyclerViewAdapterProfesion(Context mContext2, List<Profesion> mData2, String id_uc, double latitud, double longitud, int distancia) {
         this.mContext2 = mContext2;
         this.mData2 = mData2;
         this.id_uc = id_uc;
-
-        //Request option for Glide
-
-        //option2 = new RequestOptions().centerCrop().placeholder(R.drawable.loading_shape).error(R.drawable.loading_shape);
-
+        this.latitud = latitud;
+        this.longitud = longitud;
+        this.distancia = distancia;
     }
 
     @Override
@@ -51,7 +51,9 @@ public class RecyclerViewAdapterProfesion extends RecyclerView.Adapter<RecyclerV
                 Intent i = new Intent(mContext2, TarjetasServidores.class);
                 i.putExtra("id", mData2.get(viewHolder.getAdapterPosition()).getId_profesion2());
                 i.putExtra("id_uc", id_uc);
-
+                i.putExtra("latitud", latitud);
+                i.putExtra("longitud", longitud);
+                i.putExtra("distancia", distancia);
                 mContext2.startActivity(i);
             }
         });
@@ -65,11 +67,6 @@ public class RecyclerViewAdapterProfesion extends RecyclerView.Adapter<RecyclerV
 
         holder.tv_id.setText("" + mData2.get(position).getId_profesion2());
         holder.tv_nombre.setText(mData2.get(position).getNombre2());
-
-        //Load image from Internet
-
-        //Glide.with(mContext2).load(mData2.get(position).getImagen_url2()).apply(option2).into(holder.iv_imagen);
-
     }
 
     @Override

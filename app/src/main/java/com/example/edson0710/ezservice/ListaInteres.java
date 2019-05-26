@@ -87,7 +87,7 @@ public class ListaInteres extends Fragment {
             }
         });
 
-        updateToken(FirebaseInstanceId.getInstance().getToken());
+        //updateToken(FirebaseInstanceId.getInstance().getToken());
 
         return rootView;
     }
@@ -208,11 +208,11 @@ public class ListaInteres extends Fragment {
         x.add(peticion);
     }
 
-    private void updateToken(String token){
+    /*private void updateToken(String token){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
         Token token1 = new Token(token);
         reference.child(firebaseUser.getUid()).setValue(token1);
-    }
+    }*/
 
 
 }

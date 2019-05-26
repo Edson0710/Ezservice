@@ -19,12 +19,21 @@
         android:textStyle="bold"
         android:layout_marginTop="10dp"/>
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/perfil_imagen"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/pefil_titulo"
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/ic_launcher" />
+
     <EditText
         android:id="@+id/perfil_nombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       android:layout_below="@+id/pefil_titulo"
-        android:layout_marginTop="40dp"
+       android:layout_below="@+id/perfil_imagen"
+        android:layout_marginTop="20dp"
         android:textColor="#fff"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
@@ -66,6 +75,20 @@
         android:text="Teléfono"
         android:inputType="numberDecimal"/>
 
+    <EditText
+        android:id="@+id/perfil_descripcion"
+        android:textColor="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/perfil_telefono"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:text="Descripcion"
+        android:inputType="text"/>
+
+
+
     <Button
         android:id="@+id/perfil_aceptar"
         android:text="Aceptar"
@@ -79,6 +102,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
+
+
+
+
 
 
 

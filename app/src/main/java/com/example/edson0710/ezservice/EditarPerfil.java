@@ -50,9 +50,6 @@ public class EditarPerfil extends AppCompatActivity {
             url1 = "http://ezservice.tech/editarperfil_server.php?cat=" + id;
         }
 
-        jsoncall();
-        //Toast.makeText(EditarPerfil.this, "Type: "+type_obtener, Toast.LENGTH_SHORT).show();
-
 
         jsoncall();
 

@@ -4,6 +4,7 @@ import android.animation.ArgbEvaluator;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -44,6 +45,8 @@ public class TarjetasServidores extends AppCompatActivity {
     List<TarjetaUsuario> models;
     Button solicitar;
     FloatingActionButton home;
+    double latitud, longitud;
+    int distancia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,12 @@ public class TarjetasServidores extends AppCompatActivity {
         setContentView(R.layout.activity_tarjetas_servidores);
         id = getIntent().getExtras().getInt("id");
         id_uc = getIntent().getExtras().getString("id_uc");
+        latitud = getIntent().getExtras().getDouble("latitud");
+        longitud = getIntent().getExtras().getDouble("longitud");
+        distancia = getIntent().getExtras().getInt("distancia");
+        Toast.makeText(TarjetasServidores.this, "d: " + distancia, Toast.LENGTH_SHORT).show();
+
+
 
         JSON_URL = "http://ezservice.tech/mostrar_servidores.php?cat=" + id;
         solicitar =  findViewById(R.id.btn_contratar);
@@ -73,8 +82,8 @@ public class TarjetasServidores extends AppCompatActivity {
         solicitar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                id_us = models.get(viewPager.getCurrentItem()).getId();
-                jsoncall2();
+                /*id_us = models.get(viewPager.getCurrentItem()).getId();
+                jsoncall2();*/
 
             }
         });
@@ -101,9 +110,21 @@ public class TarjetasServidores extends AppCompatActivity {
                         tarjetaUsuario.setImagen(jsonObject.getString("imagen"));
                         tarjetaUsuario.setCalificacion(jsonObject.getDouble("calificacion"));
                         tarjetaUsuario.setDescripcion(jsonObject.getString("descripcion"));
+                        tarjetaUsuario.setLatitud(jsonObject.getDouble("latitud"));
+                        tarjetaUsuario.setLongitud(jsonObject.getDouble("longitud"));
 
-                        models.add(tarjetaUsuario);
+                        Location locationA = new Location("punto A");
+                        locationA.setLatitude(latitud);
+                        locationA.setLongitude(longitud);
+                        Location locationB = new Location("punto B");
+                        locationB.setLatitude(jsonObject.getDouble("latitud"));
+                        locationB.setLongitude(jsonObject.getDouble("longitud"));
+                        float distance = locationA.distanceTo(locationB);
+                        distance = distance / 1000;
 
+                        if (distance <= distancia) {
+                            models.add(tarjetaUsuario);
+                        }
 
                     } catch (JSONException e) {
                         e.getCause();
@@ -113,7 +134,7 @@ public class TarjetasServidores extends AppCompatActivity {
                 }
                 if(models == null || models.size() == 0){
                     AlertDialog.Builder myBuild = new AlertDialog.Builder(TarjetasServidores.this);
-                    myBuild.setMessage("No hay usuarios disponibles por el momento...");
+                    myBuild.setMessage("No hay usuarios disponibles por el momento ó intenta con otros filtros");
                     myBuild.setTitle("Ezservice");
                     myBuild.setCancelable(false);
                     myBuild.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {

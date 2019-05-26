@@ -1,6 +1,7 @@
 package com.example.edson0710.ezservice;
 
 import android.content.Intent;
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,11 +33,17 @@ public class Categorias extends AppCompatActivity {
     private List<Categoria> lista;
     private RecyclerView recycler;
     String id_uc;
+    double latitud, longitud;
+    int distancia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         id_uc = getIntent().getExtras().getString("id_uc");
+        latitud = getIntent().getExtras().getDouble("latitud");
+        longitud = getIntent().getExtras().getDouble("longitud");
+        distancia = getIntent().getExtras().getInt("distancia");
+        Toast.makeText(Categorias.this, "d: " + distancia, Toast.LENGTH_SHORT).show();
         setContentView(R.layout.activity_categorias);
         lista = new ArrayList<>();
         jsoncall();
@@ -84,7 +91,7 @@ public class Categorias extends AppCompatActivity {
     public void setuprecyclerview(List<Categoria> lista) {
         recycler = findViewById(R.id.recyclerview_categorias);
         recycler.addItemDecoration(new DivideRecycler(getResources()));
-        RecyclerViewAdapterCategoria myadapter = new RecyclerViewAdapterCategoria(this, lista, id_uc);
+        RecyclerViewAdapterCategoria myadapter = new RecyclerViewAdapterCategoria(this, lista, id_uc, latitud, longitud, distancia);
         LinearLayoutManager mLayouyManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
         recycler.setLayoutManager(mLayouyManager);

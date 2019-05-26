@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorFondo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Registro1">
+    tools:context=".Registro2">
 
     <TextView
-        android:id="@+id/registro1_titulo"
+        android:id="@+id/registro2_titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="Registro"
+        android:text="Pre-Registro"
         android:textColor="#fff"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -22,7 +21,7 @@
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:drawableLeft="@drawable/ic_action_phone_mail_blue"
-        android:layout_below="@id/registro1_titulo"
+        android:layout_below="@id/registro2_titulo"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,12 +37,12 @@
         app:met_helperTextColor="#fff"
         android:hint="Correo electrónico"
         android:inputType="textEmailAddress"
-        android:id="@+id/registro1_correo"
+        android:id="@+id/registro2_correo"
         android:layout_centerHorizontal="true"
         />
     <com.rengwuxian.materialedittext.MaterialEditText
         android:drawableLeft="@drawable/ic_action_user"
-        android:layout_below="@id/registro1_correo"
+        android:layout_below="@id/registro2_correo"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,13 +58,13 @@
         app:met_helperTextColor="#fff"
         android:hint="Nombre"
         android:inputType="text"
-        android:id="@+id/registro1_nombre"
+        android:id="@+id/registro2_nombre"
         android:layout_centerHorizontal="true"
         />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:drawableLeft="@drawable/ic_action_user"
-        android:layout_below="@id/registro1_nombre"
+        android:layout_below="@id/registro2_nombre"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -81,13 +80,13 @@
         app:met_helperTextColor="#fff"
         android:hint="Apellido"
         android:inputType="text"
-        android:id="@+id/registro1_apellido"
+        android:id="@+id/registro2_apellido"
         android:layout_centerHorizontal="true"
         />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:drawableLeft="@drawable/ic_action_phone_blue"
-        android:layout_below="@id/registro1_apellido"
+        android:layout_below="@id/registro2_apellido"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -103,20 +102,20 @@
         app:met_helperTextColor="#fff"
         android:hint="Teléfono"
         android:inputType="number"
-        android:id="@+id/registro1_telefono"
+        android:id="@+id/registro2_telefono"
         android:layout_centerHorizontal="true"
         />
 
     <RelativeLayout
-        android:id="@+id/registro1_linear"
+        android:id="@+id/registro2_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="30dp"
-        android:layout_below="@+id/registro1_telefono">
+        android:layout_below="@+id/registro2_telefono">
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/registro1_password1"
+            android:id="@+id/registro2_password1"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -134,7 +133,7 @@
             app:met_underlineColor="#fff" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/registro1_password2"
+            android:id="@+id/registro2_password2"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -154,7 +153,7 @@
 
 
     <RadioGroup
-        android:layout_below="@+id/registro1_linear"
+        android:layout_below="@+id/registro2_linear"
         android:id="@+id/rgroup"
         android:orientation="horizontal"
         android:gravity="center"
@@ -182,17 +181,11 @@
 
     </RadioGroup>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:background="@mipmap/ic_launcher"
-        android:id="@+id/registro1_imagen"
-        android:layout_marginTop="5dp"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/rgroup"
-        android:layout_centerHorizontal="true"/>
+
+
 
     <Button
-        android:id="@+id/registro1_registrar"
+        android:id="@+id/registro2_registrar"
         android:text="Registrar"
         android:textColor="#fff"
         android:background="@drawable/round2"

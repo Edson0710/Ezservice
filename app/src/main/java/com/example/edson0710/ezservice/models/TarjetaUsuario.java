@@ -6,7 +6,7 @@ public class TarjetaUsuario {
     private String nombre;
     private int edad;
     private int id;
-    private double calificacion;
+    private double calificacion, latitud, longitud;
     private String descripcion;
 
     public TarjetaUsuario() {
@@ -16,6 +16,8 @@ public class TarjetaUsuario {
         this.calificacion = calificacion;
         this.descripcion = descripcion;
         this.id = id;
+        this.latitud = latitud;
+        this.longitud = longitud;
     }
 
     public String getImagen() {
@@ -64,5 +66,21 @@ public class TarjetaUsuario {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
     }
 }

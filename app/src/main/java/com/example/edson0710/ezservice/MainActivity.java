@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -85,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
                 //username.setText(user.getId());
                 id_firebase = user.getId();
                 json_firebase();
-                Toast.makeText(MainActivity.this, ""+id_firebase, Toast.LENGTH_SHORT).show();
 
             }
 
