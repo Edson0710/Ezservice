@@ -24,6 +24,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -112,7 +115,7 @@ public class Configuracion extends Fragment {
                               imagen = response.getString("imagen");
                                     tv_nombre.setText(nombre + " " + apellido);
                                     tv_calificacion.setText(calificacion);
-                                    Glide.with(getContext()).load(imagen).apply(option.circleCropTransform()).into(iv_imagen);
+                                    Picasso.with(getContext()).load(imagen).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(iv_imagen);
 
 
 } catch (JSONException e) {

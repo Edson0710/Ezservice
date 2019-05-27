@@ -43,7 +43,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Registro1 extends AppCompatActivity {
     Bitmap bitmap;
-
     private static final int COD_SELECCION = 10;
     private static final int COD_FOTO = 20;
     private String UPLOAD_URL = "http://ezservice.tech/registro1.php";
@@ -92,7 +91,6 @@ public class Registro1 extends AppCompatActivity {
     }
 
     private void mostrarDialogOpciones() {
-        //Toast.makeText(Registro1.this, "Mostrar opciones", Toast.LENGTH_SHORT).show();
         final CharSequence[] opciones = {"Elegir de Galeria", "Cancelar"};
         final AlertDialog.Builder builder = new AlertDialog.Builder(Registro1.this);
         builder.setTitle("Elige una opción: ");

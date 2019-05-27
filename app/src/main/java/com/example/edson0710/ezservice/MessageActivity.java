@@ -1,12 +1,18 @@
 package com.example.edson0710.ezservice;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -17,6 +23,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -43,6 +51,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -55,7 +64,7 @@ public class MessageActivity extends AppCompatActivity {
 
     CircleImageView profile_image;
     TextView username;
-    Button button, llamada;
+    Button button, llamada, evento;
 
     FirebaseUser firebaseUser;
     DatabaseReference reference;
@@ -104,6 +113,7 @@ public class MessageActivity extends AppCompatActivity {
         llamada = findViewById(R.id.phone);
         btn_send = findViewById(R.id.btn_send);
         text_send = findViewById(R.id.text_send);
+        evento = findViewById(R.id.event);
 
         //apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
@@ -131,6 +141,15 @@ public class MessageActivity extends AppCompatActivity {
                     Toast.makeText(MessageActivity.this, "You can't send empty message", Toast.LENGTH_SHORT).show();
                 }
                 text_send.setText("");
+            }
+        });
+
+        evento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //addEventToCalendar(MessageActivity.this);
+                DialogFragment fragment = new DatePickerFragment();
+                fragment.show(getFragmentManager(), "datePicker");
             }
         });
 
@@ -225,66 +244,7 @@ public class MessageActivity extends AppCompatActivity {
 
         reference.child("Chats").push().setValue(hashMap);
 
-        /*final String msg = message;
-
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if (notify) {
-                    sendNotification(receiver, user.getUsername(), msg);
-                }
-                notify = false;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
-
     }
-
-   /* private void sendNotification(String receiver, final String username, final String message){
-        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
-        Query query = tokens.orderByKey().equalTo(receiver);
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Token token = snapshot.getValue(Token.class);
-                    Data noti = new Data(firebaseUser.getUid(), R.mipmap.ic_launcher, username+": "+message, "New Message",
-                            userid);
-
-                    Sender sender = new Sender(noti, token.getToken());
-
-                    apiService.sendNotification(sender)
-                            .enqueue(new Callback<MyResponse>() {
-                                @Override
-                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
-                                    if (response.code() == 200){
-                                        if (response.body().success != 1){
-                                            Toast.makeText(MessageActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<MyResponse> call, Throwable t) {
-
-                                }
-                            });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }*/
-
 
 
     private void readMessage(final String myid, final String userid, final String imageurl){
@@ -325,4 +285,54 @@ public class MessageActivity extends AppCompatActivity {
         super.onPause();
         reference.removeEventListener(seenListener);
     }
+
+    private void addEventToCalendar(Activity activity){
+        Calendar cal = Calendar.getInstance();
+
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        cal.set(Calendar.MONTH, 5);
+        cal.set(Calendar.YEAR, 2019);
+
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+        intent.setType("vnd.android.cursor.item/event");
+
+
+        intent.putExtra(CalendarContract.Events.ALL_DAY, true);
+        intent.putExtra(CalendarContract.Events.RRULE , "FREQ=ALL_DAY");
+        intent.putExtra(CalendarContract.Events.TITLE, "Servicio de Ezservice");
+
+        activity.startActivity(intent);
+    }
+
+    public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            return new DatePickerDialog( getActivity(), this, year, month, day);
+        }
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            Toast.makeText(getActivity(), "Año:"+year+" mes:" + month + " dia:" + dayOfMonth, Toast.LENGTH_SHORT).show();
+            Calendar cal = Calendar.getInstance();
+
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            cal.set(Calendar.MONTH, month);
+            cal.set(Calendar.YEAR, year);
+
+            Intent intent = new Intent(Intent.ACTION_EDIT);
+            intent.setType("vnd.android.cursor.item/event");
+            intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, cal.getTimeInMillis());
+            intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, cal.getTimeInMillis()+60*60*1000);
+            intent.putExtra(CalendarContract.Events.ALL_DAY, true);
+            intent.putExtra(CalendarContract.Events.TITLE, "Servicio de Ezservice");
+            startActivity(intent);
+        }
+    }
+
 }
