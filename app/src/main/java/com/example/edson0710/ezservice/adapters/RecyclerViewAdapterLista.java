@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.edson0710.ezservice.MessageActivity;
+import com.example.edson0710.ezservice.PrimerMensaje;
 import com.example.edson0710.ezservice.R;
 import com.example.edson0710.ezservice.TarjetasServidores;
 import com.example.edson0710.ezservice.models.Lista;
@@ -52,16 +53,28 @@ public class RecyclerViewAdapterLista extends RecyclerView.Adapter<RecyclerViewA
                 String prueba = mData2.get(viewHolder.getAdapterPosition()).getEstado();
                 String id_firebase = mData2.get(viewHolder.getAdapterPosition()).getId_firebase();
                 String imagenURL = mData2.get(viewHolder.getAdapterPosition()).getImagen();
+                int chat = mData2.get(viewHolder.getAdapterPosition()).getChat();
                 double telefono = mData2.get(viewHolder.getAdapterPosition()).getTelefono();
                 int id_us = mData2.get(viewHolder.getAdapterPosition()).getId_us();
                 Toast.makeText(mContext2, "Seleccionaste: "+prueba, Toast.LENGTH_SHORT).show();
-                if (prueba.equals("Aceptado")){
+                if (prueba.equals("Aceptado") && chat==0){
+                    Intent intent = new Intent(mContext2, PrimerMensaje.class);
+                    intent.putExtra("userid", id_firebase);
+                    intent.putExtra("imagenURL", imagenURL);
+                    intent.putExtra("telefono", telefono);
+                    intent.putExtra("id_uc", id_uc);
+                    intent.putExtra("id_us", id_us);
+                    intent.putExtra("chat", chat);
+                    mContext2.startActivity(intent);
+                }
+                if (prueba.equals("Aceptado") && chat==1){
                     Intent intent = new Intent(mContext2, MessageActivity.class);
                     intent.putExtra("userid", id_firebase);
                     intent.putExtra("imagenURL", imagenURL);
                     intent.putExtra("telefono", telefono);
                     intent.putExtra("id_uc", id_uc);
-                    intent  .putExtra("id_us", id_us);
+                    intent.putExtra("id_us", id_us);
+                    intent.putExtra("chat", chat);
                     mContext2.startActivity(intent);
                 }
             }

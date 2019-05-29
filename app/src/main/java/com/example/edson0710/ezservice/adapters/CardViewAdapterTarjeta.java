@@ -58,22 +58,22 @@ public class CardViewAdapterTarjeta extends PagerAdapter {
         final View view = layoutInflater.inflate(R.layout.item_cardview, container, false);
 
         ImageView imagen;
-        TextView nombre, edad, calificacion, descripcion;
+        TextView nombre, distancia, calificacion, descripcion;
         Button comentarios;
         TextView contador;
 
         imagen = view.findViewById(imagen_cardview);
         nombre = view.findViewById(R.id.nombre_cardview);
         descripcion = view.findViewById(R.id.descripcion_cardview);
-        edad = view.findViewById(R.id.edad_cardview);
+        distancia = view.findViewById(R.id.km_cardview);
         calificacion = view.findViewById(R.id.calificacion_cardview);
         comentarios = view.findViewById(R.id.btn_comentarios);
         contador = view.findViewById(R.id.contador);
 
-        contador.setText(position+1 + " de " + models.size());
+        contador.setText(position + 1 + " de " + models.size());
         nombre.setText(models.get(position).getNombre());
         descripcion.setText(models.get(position).getDescripcion());
-        edad.setText("" + models.get(position).getEdad());
+        distancia.setText(models.get(position).getDistancia()+ " Km");
         calificacion.setText("" + models.get(position).getCalificacion());
         //Load image from Internet
 
@@ -83,9 +83,7 @@ public class CardViewAdapterTarjeta extends PagerAdapter {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, Comentarios.class);
-                //i.putExtra("id",models.get(view.getAdapterPosition()).getId_profesion2());
                 i.putExtra("id", models.get(position).getId());
-                //eeeeeeeeeeeeey arriba
                 context.startActivity(i);
 
 

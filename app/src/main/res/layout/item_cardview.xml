@@ -1,127 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@color/colorFondo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorFondo"
     android:gravity="center"
-    >
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/contador"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/contador"
-        android:textColor="#fff"
-        android:textStyle="bold"
-        android:textSize="18sp"
         android:text="1 de 1"
-        />
+        android:textColor="#fff"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="450dp"
-        app:cardCornerRadius="20dp"
+        android:layout_margin="8dp"
         android:background="@color/colorPrimary"
-        android:layout_margin="8dp">
+        app:cardCornerRadius="20dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:background="@color/colorPrimary"
-            android:layout_height="450dp">
+            android:layout_height="450dp"
+            android:background="@color/colorPrimary">
 
             <LinearLayout
+                android:id="@+id/contenedor_imagen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/contenedor_imagen"
-                android:gravity="center"
                 android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp">
+                android:layout_marginRight="16dp"
+                android:gravity="center">
 
                 <ImageView
-                    android:layout_marginTop="16dp"
                     android:id="@+id/imagen_cardview"
                     android:layout_width="180dp"
                     android:layout_height="180dp"
-                    android:scaleType="center"
-                    android:background="@drawable/img"
                     android:layout_marginBottom="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/img"
+                    android:scaleType="center"
 
                     />
 
             </LinearLayout>
 
-
-            <TextView
-                android:id="@+id/calificacion_cardview"
+            <RelativeLayout
+                android:id="@+id/container_Calificacion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/contenedor_imagen"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:textColor="#fff"
-                android:text="Calificacion" />
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/contenedor_imagen">
+
+                <RelativeLayout
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/calificacion_cardview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginRight="2dp"
+                        android:gravity="center"
+                        android:text="Calificacion"
+                        android:textColor="#fff" />
+
+                    <TextView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/calificacion_cardview"
+                        android:background="@drawable/ic_action_star_white" />
+                </RelativeLayout>
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/nombre_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_below="@+id/calificacion_cardview"
+                android:textStyle="bold"
+                android:layout_below="@+id/container_Calificacion"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="3dp"
-                android:textColor="#fff"
-                android:text="Nombre" />
+                android:gravity="center"
+                android:text="Nombre"
+                android:textColor="#fff" />
 
             <TextView
-                android:id="@+id/edad_cardview"
+                android:id="@+id/km_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/nombre_cardview"
                 android:layout_marginLeft="16dp"
+                android:textStyle="bold"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="3dp"
-                android:textColor="#fff"
                 android:gravity="center"
-                android:text="Edad" />
+                android:text="distancia"
+                android:textColor="#fff" />
 
             <TextView
                 android:id="@+id/descripcion_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/edad_cardview"
-                android:gravity="center"
+                android:layout_below="@+id/km_cardview"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="3dp"
                 android:drawablePadding="10dp"
-                android:textColor="#fff"
                 android:ellipsize="end"
+                android:gravity="center"
                 android:maxLines="3"
-                android:text="Descripción" />
+                android:text="Descripción"
+                android:textColor="#fff" />
 
             <Button
                 android:id="@+id/btn_comentarios"
-                android:text="Comentarios"
-                android:textColor="#fff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/round"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_centerHorizontal="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:text="Comentarios"
+                android:textColor="#fff"
 
                 />
-
-
-
-
-
 
 
         </RelativeLayout>

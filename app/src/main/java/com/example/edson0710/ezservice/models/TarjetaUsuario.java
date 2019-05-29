@@ -8,6 +8,7 @@ public class TarjetaUsuario {
     private int id;
     private double calificacion, latitud, longitud;
     private String descripcion;
+    private String distancia;
 
     public TarjetaUsuario() {
         this.imagen = imagen;
@@ -18,6 +19,7 @@ public class TarjetaUsuario {
         this.id = id;
         this.latitud = latitud;
         this.longitud = longitud;
+        this.distancia = distancia;
     }
 
     public String getImagen() {
@@ -82,5 +84,13 @@ public class TarjetaUsuario {
 
     public void setLongitud(double longitud) {
         this.longitud = longitud;
+    }
+
+    public String getDistancia() {
+        return distancia;
+    }
+
+    public void setDistancia(String distancia) {
+        this.distancia = distancia;
     }
 }

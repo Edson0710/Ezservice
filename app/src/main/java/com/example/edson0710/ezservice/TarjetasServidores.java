@@ -29,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +49,7 @@ public class TarjetasServidores extends AppCompatActivity {
     double latitud, longitud;
     int distancia;
     float calificacion;
+    DecimalFormat format1 = new DecimalFormat("#.##");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,9 +124,9 @@ public class TarjetasServidores extends AppCompatActivity {
                         locationB.setLongitude(jsonObject.getDouble("longitud"));
                         float distance = locationA.distanceTo(locationB);
                         distance = distance / 1000;
-
                         if (tarjetaUsuario.getCalificacion() >= calificacion) {
                             if (distance <= distancia) {
+                                tarjetaUsuario.setDistancia(format1.format(distance));
                                 models.add(tarjetaUsuario);
                             }
                         }

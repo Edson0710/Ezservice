@@ -46,6 +46,8 @@ public class Categorias extends AppCompatActivity {
         distancia = getIntent().getExtras().getInt("distancia");
         calificacion = getIntent().getExtras().getFloat("calificacion");
         Toast.makeText(Categorias.this, "c: " + calificacion, Toast.LENGTH_SHORT).show();
+        Toast.makeText(Categorias.this, "lat"+latitud, Toast.LENGTH_SHORT).show();
+        Toast.makeText(Categorias.this, "lon"+longitud, Toast.LENGTH_SHORT).show();
         setContentView(R.layout.activity_categorias);
         lista = new ArrayList<>();
         jsoncall();
@@ -103,6 +105,7 @@ public class Categorias extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent i = new Intent(Categorias.this, MainActivity.class);
+        i.putExtra("id", id_uc);
         startActivity(i);
     }
 }

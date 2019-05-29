@@ -3,9 +3,11 @@ package com.example.edson0710.ezservice;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -17,6 +19,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+
 public class Solicitar extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     Button solicitar, mas, menos;
@@ -25,25 +29,23 @@ public class Solicitar extends Fragment implements ActivityCompat.OnRequestPermi
     int distancia = 10, n_servicios;
     private LocationManager locationManager;
     private Location location;
-    double lat = 20.702978, lon = -103.388983;
+    double lat = 1, lon = 1 ;
     RatingBar ratingBar;
     float calificacion = 1;
+
     @Override
-
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.activity_solicitar, container, false);
         id_uc = getArguments().getString("id");
-        n_servicios = getArguments().getInt("n_servicios");
+        n_servicios = obtenerServicios();
 
-        solicitar = (Button) rootView.findViewById(R.id.btn_solicitar);
-        texto = (TextView) rootView.findViewById(R.id.tv_calificacion);
+        solicitar = rootView.findViewById(R.id.btn_solicitar);
+        texto = rootView.findViewById(R.id.tv_calificacion);
         ubicacion = rootView.findViewById(R.id.tv_distancia);
         mas = rootView.findViewById(R.id.btn_mas);
         menos = rootView.findViewById(R.id.btn_menos);
         ratingBar = rootView.findViewById(R.id.raitingbar2);
         ratingBar.setRating(calificacion);
-        Toast.makeText(getContext(), "n: " + n_servicios, Toast.LENGTH_SHORT).show();
 
         if (n_servicios < 5){
             ratingBar.setVisibility(View.INVISIBLE);
@@ -51,14 +53,16 @@ public class Solicitar extends Fragment implements ActivityCompat.OnRequestPermi
         }
 
 
-        if (ActivityCompat.checkSelfPermission(rootView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(rootView.getContext(), "No hay permisos", Toast.LENGTH_SHORT).show();
+       if (ActivityCompat.checkSelfPermission(rootView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(rootView.getContext(), "No hay permiso de ubicación", Toast.LENGTH_SHORT).show();
         } else {
             //Ubicación
-            locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             lat = location.getLatitude();
             lon = location.getLongitude();
+            Toast.makeText(getContext(), "lat"+lat, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "lon"+lon, Toast.LENGTH_SHORT).show();
         }
 
         mas.setOnClickListener(new View.OnClickListener() {
@@ -99,5 +103,12 @@ public class Solicitar extends Fragment implements ActivityCompat.OnRequestPermi
 
         return rootView;
     }
+
+    public int obtenerServicios() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int type_preference = preferences.getInt("servicios", 1);
+        return type_preference;
+    }
+
 
 }

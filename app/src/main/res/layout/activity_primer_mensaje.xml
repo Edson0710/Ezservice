@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorFondo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PrimerMensaje">
+
+    <TextView
+        android:id="@+id/msg_titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Información"
+        android:textColor="#fff"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/msg_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:text="¿Cuál es el problema?"
+        android:layout_below="@+id/msg_titulo"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="16sp"
+        />
+
+    <EditText
+        android:layout_centerHorizontal="true"
+        android:id="@+id/msg_problema"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/msg_1"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="#fff"
+        android:layout_marginRight="20dp"/>
+    <TextView
+        android:id="@+id/msg_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:text="Dirección:"
+        android:layout_below="@+id/msg_problema"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="16sp"
+        />
+
+    <EditText
+        android:layout_centerHorizontal="true"
+        android:id="@+id/msg_ubicacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/msg_2"
+        android:textColor="#fff"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:id="@+id/msg_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:text="Presupuesto:"
+        android:textStyle="bold"
+        android:layout_below="@+id/msg_ubicacion"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="16sp"
+        />
+
+    <EditText
+        android:id="@+id/msg_presupuesto"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textSize="16sp"
+        android:layout_below="@+id/msg_3"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:drawableLeft="@drawable/ic_action_money"
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:id="@+id/msg_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:text="Fecha:"
+        android:textStyle="bold"
+        android:layout_below="@+id/msg_ubicacion"
+        android:layout_toEndOf="@+id/msg_3"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="100dp"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:id="@+id/msg_fecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/msg_presupuesto"
+        android:layout_alignStart="@+id/msg_4"
+        android:text="YYYY/MM/DD"
+        android:textColor="#fff"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+
+
+    <Button
+        android:id="@+id/btn_enviar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="170dp"
+        android:textColor="#fff"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="Enviar"
+        android:background="@drawable/round2"/>
+
+
+
+</RelativeLayout>

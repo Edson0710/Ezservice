@@ -113,6 +113,7 @@ public class ListaInteres extends Fragment {
                         lista.setEstado(jsonObject.getString("estado"));
                         lista.setId_firebase(jsonObject.getString("id_firebase"));
                         lista.setTelefono(jsonObject.getDouble("telefono"));
+                        lista.setChat(jsonObject.getInt("chat"));
 
                         listaInter.add(lista);
 

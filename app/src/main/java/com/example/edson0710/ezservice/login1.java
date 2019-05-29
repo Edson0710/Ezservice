@@ -136,8 +136,8 @@ public class login1 extends AppCompatActivity {
                                                                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                                             guardarId(id);
                                                                             guardarTipo(type_obtener);
+                                                                            guardarServicios(n_servicios);
                                                                             intent.putExtra("id", id);
-                                                                            intent.putExtra("n_servicios", n_servicios);
                                                                             Toast.makeText(login1.this, "All is fine", Toast.LENGTH_SHORT).show();
                                                                             startActivity(intent);
                                                                             finish();
@@ -257,6 +257,13 @@ public class login1 extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(login1.this);
         SharedPreferences.Editor myEditor = preferences.edit();
         myEditor.putInt("TIPO", my_type);
+        myEditor.commit();
+    }
+
+    public void guardarServicios(int my_type) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(login1.this);
+        SharedPreferences.Editor myEditor = preferences.edit();
+        myEditor.putInt("servicios", my_type);
         myEditor.commit();
     }
 

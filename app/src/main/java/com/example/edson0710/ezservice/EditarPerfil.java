@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -91,10 +92,10 @@ public class EditarPerfil extends AppCompatActivity {
 
                 if (type_obtener == 1) {
                     UPLOAD_URL = "http://ezservice.tech/updateperfil.php";
-                            nombreT = et_nombre.getText().toString().trim();
-                            apellidoT = et_apellido.getText().toString().trim();
-                            correoT = et_correo.getText().toString().trim();
-                            telefonoT = et_telefono.getText().toString().trim();
+                    nombreT = et_nombre.getText().toString().trim();
+                    apellidoT = et_apellido.getText().toString().trim();
+                    correoT = et_correo.getText().toString().trim();
+                    telefonoT = et_telefono.getText().toString().trim();
 
                 }
                 if (type_obtener == 2) {
@@ -207,15 +208,34 @@ public class EditarPerfil extends AppCompatActivity {
                 Uri miPath = data.getData();
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), miPath);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 imagen.setImageURI(miPath);
                 break;
         }
+        bitmap = redimensionarImagen(bitmap, 600, 800);
     }
 
-    private void uploadImage(final String nombre, final String apellido,  final String correo,  final String telefono) {
+    private Bitmap redimensionarImagen(Bitmap bitmap, float anchoNuevo, float altoNuevo) {
+        int ancho = bitmap.getWidth();
+        int alto = bitmap.getHeight();
+
+        if (ancho > anchoNuevo || alto > altoNuevo) {
+            float escalaAncha =  anchoNuevo/ancho;
+            float escalaAlto = altoNuevo/alto;
+            Matrix matrix = new Matrix();
+            matrix.postScale(escalaAncha, escalaAlto);
+            return Bitmap.createBitmap(bitmap, 0, 0, ancho, alto, matrix, false);
+
+        } else {
+            return bitmap;
+        }
+
+    }
+
+    private void uploadImage(final String nombre, final String apellido, final String correo, final String telefono) {
         //Mostrar el diálogo de progreso
         final ProgressDialog loading = ProgressDialog.show(this, "Actualizando...", "Espere por favor...", false, false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
