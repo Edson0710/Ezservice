@@ -1,6 +1,7 @@
 package com.example.edson0710.ezservice;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -84,7 +85,6 @@ public class MainActivity extends AppCompatActivity  {
 
         id = getIntent().getExtras().getString("id");
         n_servicios = getIntent().getExtras().getInt("n_servicios");
-
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());

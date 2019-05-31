@@ -1,11 +1,7 @@
 package com.example.edson0710.ezservice;
 
-import android.app.Fragment;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +19,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.edson0710.ezservice.Notifications.Token;
-import com.example.edson0710.ezservice.adapters.RecyclerViewAdapterLista;
 import com.example.edson0710.ezservice.adapters.RecyclerViewAdapterListaServidor;
 import com.example.edson0710.ezservice.models.Lista;
 import com.google.firebase.auth.FirebaseAuth;
@@ -88,9 +83,7 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
 
             }
         });
-
         updateToken(FirebaseInstanceId.getInstance().getToken());
-
         return rootView;
     }
 
@@ -247,4 +240,5 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
         Token token1 = new Token(token);
         reference.child(firebaseUser.getUid()).setValue(token1);
     }
+
 }

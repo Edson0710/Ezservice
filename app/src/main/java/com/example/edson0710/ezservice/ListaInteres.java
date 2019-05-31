@@ -1,11 +1,9 @@
 package com.example.edson0710.ezservice;
 
-import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,9 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.edson0710.ezservice.Notifications.Token;
 import com.example.edson0710.ezservice.adapters.RecyclerViewAdapterLista;
-import com.example.edson0710.ezservice.adapters.RecyclerViewAdapterProfesion;
 import com.example.edson0710.ezservice.models.Lista;
-import com.example.edson0710.ezservice.models.Profesion;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -87,7 +83,7 @@ public class ListaInteres extends Fragment {
             }
         });
 
-        //updateToken(FirebaseInstanceId.getInstance().getToken());
+        updateToken(FirebaseInstanceId.getInstance().getToken());
 
         return rootView;
     }
@@ -209,11 +205,11 @@ public class ListaInteres extends Fragment {
         x.add(peticion);
     }
 
-    /*private void updateToken(String token){
+    private void updateToken(String token){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
         Token token1 = new Token(token);
         reference.child(firebaseUser.getUid()).setValue(token1);
-    }*/
+    }
 
 
 }

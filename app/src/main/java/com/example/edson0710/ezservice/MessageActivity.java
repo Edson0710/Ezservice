@@ -1,29 +1,20 @@
 package com.example.edson0710.ezservice;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -85,16 +76,16 @@ public class MessageActivity extends AppCompatActivity {
     Intent intent;
     String userid;
     ValueEventListener seenListener;
-    APIService apiService;
     int tipo;
-    boolean notify = false;
-    boolean flag = false;
+    boolean mnotify = false;
     String id_uc, body;
     int id_us;
     String problema;
     String ubicacion;
     String fecha;
     String presupuesto;
+
+    APIService apiService;
 
     @Override
     protected void onStart() {
@@ -103,9 +94,6 @@ public class MessageActivity extends AppCompatActivity {
         tipo = obtenerTipo();
         if (tipo == 2) {
             button.setVisibility(View.INVISIBLE);
-            if (estado.equals("Finalizando")) {
-                button.setVisibility(View.VISIBLE);
-            }
         }
     }
 
@@ -123,7 +111,7 @@ public class MessageActivity extends AppCompatActivity {
         text_send = findViewById(R.id.text_send);
         evento = findViewById(R.id.event);
 
-        //apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -147,7 +135,7 @@ public class MessageActivity extends AppCompatActivity {
 
         body = "Hola, mi problema es el siguiente: \n" + problema +
                 "\n   Lugar:\n" + ubicacion + "\n   Fecha:\n" + fecha + "\n   Presupuesto:\n$" + presupuesto;
-        if (chat == 0) {
+        if (chat == 0 && tipo == 1) {
             sendMessage(firebaseUser.getUid(), userid, body);
             jsoncall();
             jsoncall2();
@@ -157,7 +145,7 @@ public class MessageActivity extends AppCompatActivity {
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                notify = true;
+                mnotify = true;
                 String msg = text_send.getText().toString();
                 if (!msg.equals("")) {
                     sendMessage(firebaseUser.getUid(), userid, msg);
@@ -331,6 +319,8 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
+
+
     private void sendMessage(String sender, final String receiver, String message) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
@@ -342,8 +332,64 @@ public class MessageActivity extends AppCompatActivity {
 
         reference.child("Chats").push().setValue(hashMap);
 
+        final String msg = message;
+
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if (mnotify) {
+                    sendNotificaction(receiver, user.getUsername(), msg);
+                    sendNotificaction(receiver, user.getUsername(), msg);
+                }
+                mnotify = false;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
+    private void sendNotificaction(String receiver, final String username, final String message){
+        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
+        Query query = tokens.orderByKey().equalTo(receiver); //Ojo tambien
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Token token = snapshot.getValue(Token.class);
+                    String bodys = username+": "+message;
+                    Data data = new Data(firebaseUser.getUid(), R.drawable.icono3, bodys, "Nuevo Mensaje",
+                            userid);
+                    Sender sender = new Sender(data, token.getToken());
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<MyResponse>() {
+                                @Override
+                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                                    if (response.code() == 200){
+                                        if (response.body().success != 1){
+                                            Toast.makeText(MessageActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<MyResponse> call, Throwable t) {
+
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     private void readMessage(final String myid, final String userid, final String imageurl) {
         mChat = new ArrayList<>();
@@ -415,10 +461,11 @@ public class MessageActivity extends AppCompatActivity {
         }
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
+        int tipos = obtenerTipo();
         super.onBackPressed();
-        if (tipo == 2) {
+        if (tipos == 2) {
             Intent intent = new Intent(MessageActivity.this, MainServidor.class);
             intent.putExtra("id", id_us);
             startActivity(intent);
@@ -426,5 +473,5 @@ public class MessageActivity extends AppCompatActivity {
         Intent intent = new Intent(MessageActivity.this, MainActivity.class);
         intent.putExtra("id", id_uc);
         startActivity(intent);
-    }
+    }*/
 }
