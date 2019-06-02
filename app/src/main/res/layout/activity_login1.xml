@@ -93,7 +93,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <RadioButton
+            android:layout_marginLeft="30dp"
+            android:id="@+id/radio3"
+            android:text="Intermediario"
+            android:buttonTint="@color/colorPrimary"
+            android:textColor="#eeeeee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:text="¿Olvidaste la contraseña?"
+        android:textStyle="italic"
+        android:textSize="14sp"
+        android:layout_below="@id/rgroup"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:id="@+id/contra"/>
 
     <Button
         android:id="@+id/login1_btn_iniciar"

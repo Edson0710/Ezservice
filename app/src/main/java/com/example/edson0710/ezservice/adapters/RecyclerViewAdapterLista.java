@@ -2,6 +2,8 @@ package com.example.edson0710.ezservice.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.View;
@@ -16,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.edson0710.ezservice.MessageActivity;
 import com.example.edson0710.ezservice.PrimerMensaje;
 import com.example.edson0710.ezservice.R;
+import com.example.edson0710.ezservice.StartActivity;
 import com.example.edson0710.ezservice.TarjetasServidores;
 import com.example.edson0710.ezservice.models.Lista;
 import com.example.edson0710.ezservice.models.Profesion;
@@ -57,17 +60,29 @@ public class RecyclerViewAdapterLista extends RecyclerView.Adapter<RecyclerViewA
                 double telefono = mData2.get(viewHolder.getAdapterPosition()).getTelefono();
                 int id_us = mData2.get(viewHolder.getAdapterPosition()).getId_us();
                 Toast.makeText(mContext2, "Seleccionaste: "+prueba, Toast.LENGTH_SHORT).show();
-                if (prueba.equals("Aceptado") && chat==0){
-                    Intent intent = new Intent(mContext2, PrimerMensaje.class);
-                    intent.putExtra("userid", id_firebase);
-                    intent.putExtra("imagenURL", imagenURL);
-                    intent.putExtra("telefono", telefono);
-                    intent.putExtra("id_uc", id_uc);
-                    intent.putExtra("id_us", id_us);
-                    intent.putExtra("chat", chat);
-                    mContext2.startActivity(intent);
+                if (obtenerTipo() == 1) {
+                    if (prueba.equals("Aceptado") && chat == 0) {
+                        Intent intent = new Intent(mContext2, PrimerMensaje.class);
+                        intent.putExtra("userid", id_firebase);
+                        intent.putExtra("imagenURL", imagenURL);
+                        intent.putExtra("telefono", telefono);
+                        intent.putExtra("id_uc", id_uc);
+                        intent.putExtra("id_us", id_us);
+                        intent.putExtra("chat", chat);
+                        mContext2.startActivity(intent);
+                    }
+                    if (prueba.equals("Aceptado") && chat == 1) {
+                        Intent intent = new Intent(mContext2, MessageActivity.class);
+                        intent.putExtra("userid", id_firebase);
+                        intent.putExtra("imagenURL", imagenURL);
+                        intent.putExtra("telefono", telefono);
+                        intent.putExtra("id_uc", id_uc);
+                        intent.putExtra("id_us", id_us);
+                        intent.putExtra("chat", chat);
+                        mContext2.startActivity(intent);
+                    }
                 }
-                if (prueba.equals("Aceptado") && chat==1){
+                if (obtenerTipo() == 3){
                     Intent intent = new Intent(mContext2, MessageActivity.class);
                     intent.putExtra("userid", id_firebase);
                     intent.putExtra("imagenURL", imagenURL);
@@ -129,6 +144,12 @@ public class RecyclerViewAdapterLista extends RecyclerView.Adapter<RecyclerViewA
             menu.add(this.getAdapterPosition(), 121, 0, "Delete");
         }
 
+    }
+
+    public int obtenerTipo() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext2);
+        int type_preference = preferences.getInt("TIPO", 1);
+        return type_preference;
     }
 
 

@@ -1,7 +1,9 @@
 package com.example.edson0710.ezservice;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -45,9 +47,6 @@ public class Categorias extends AppCompatActivity {
         longitud = getIntent().getExtras().getDouble("longitud");
         distancia = getIntent().getExtras().getInt("distancia");
         calificacion = getIntent().getExtras().getFloat("calificacion");
-        Toast.makeText(Categorias.this, "c: " + calificacion, Toast.LENGTH_SHORT).show();
-        Toast.makeText(Categorias.this, "lat"+latitud, Toast.LENGTH_SHORT).show();
-        Toast.makeText(Categorias.this, "lon"+longitud, Toast.LENGTH_SHORT).show();
         setContentView(R.layout.activity_categorias);
         lista = new ArrayList<>();
         jsoncall();
@@ -104,8 +103,23 @@ public class Categorias extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(Categorias.this, MainActivity.class);
-        i.putExtra("id", id_uc);
-        startActivity(i);
+        int tipo = obtenerTipo();
+        if (tipo==1) {
+            Intent i = new Intent(Categorias.this, MainActivity.class);
+            i.putExtra("id", id_uc);
+            startActivity(i);
+        }
+        if (tipo==3) {
+            Intent i = new Intent(Categorias.this, MainInter.class);
+            i.putExtra("id", id_uc);
+            startActivity(i);
+        }
     }
+
+    public int obtenerTipo() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Categorias.this);
+        int type_preference = preferences.getInt("TIPO", 1);
+        return type_preference;
+    }
+
 }

@@ -92,7 +92,7 @@ public class MessageActivity extends AppCompatActivity {
         super.onStart();
         final String estado = getIntent().getExtras().getString("estado");
         tipo = obtenerTipo();
-        if (tipo == 2) {
+        if (tipo == 2 || tipo == 3) {
             button.setVisibility(View.INVISIBLE);
         }
     }
@@ -135,6 +135,8 @@ public class MessageActivity extends AppCompatActivity {
 
         body = "Hola, mi problema es el siguiente: \n" + problema +
                 "\n   Lugar:\n" + ubicacion + "\n   Fecha:\n" + fecha + "\n   Presupuesto:\n$" + presupuesto;
+
+        tipo = obtenerTipo();
         if (chat == 0 && tipo == 1) {
             sendMessage(firebaseUser.getUid(), userid, body);
             jsoncall();
@@ -334,62 +336,9 @@ public class MessageActivity extends AppCompatActivity {
 
         final String msg = message;
 
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if (mnotify) {
-                    sendNotificaction(receiver, user.getUsername(), msg);
-                    sendNotificaction(receiver, user.getUsername(), msg);
-                }
-                mnotify = false;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
-    private void sendNotificaction(String receiver, final String username, final String message){
-        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
-        Query query = tokens.orderByKey().equalTo(receiver); //Ojo tambien
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Token token = snapshot.getValue(Token.class);
-                    String bodys = username+": "+message;
-                    Data data = new Data(firebaseUser.getUid(), R.drawable.icono3, bodys, "Nuevo Mensaje",
-                            userid);
-                    Sender sender = new Sender(data, token.getToken());
-                    apiService.sendNotification(sender)
-                            .enqueue(new Callback<MyResponse>() {
-                                @Override
-                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
-                                    if (response.code() == 200){
-                                        if (response.body().success != 1){
-                                            Toast.makeText(MessageActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                }
 
-                                @Override
-                                public void onFailure(Call<MyResponse> call, Throwable t) {
-
-                                }
-                            });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     private void readMessage(final String myid, final String userid, final String imageurl) {
         mChat = new ArrayList<>();

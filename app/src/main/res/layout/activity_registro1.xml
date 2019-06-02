@@ -8,202 +8,292 @@
     android:layout_height="match_parent"
     tools:context=".Registro1">
 
-    <TextView
-        android:id="@+id/registro1_titulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="Registro"
-        android:textColor="#fff"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"/>
-
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:drawableLeft="@drawable/ic_action_phone_mail_blue"
-        android:layout_below="@id/registro1_titulo"
-        android:layout_marginTop="10dp"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textCursorDrawable="@color/colorPrimary"
-        android:cursorVisible="true"
-        android:layout_marginLeft="30dp"
-        app:met_floatingLabel="normal"
-        app:met_textColor="#fff"
-        app:met_textColorHint="#9e9e9e"
-        app:met_underlineColor="#fff"
-        app:met_floatingLabelTextColor="#fff"
-        app:met_baseColor="#fff"
-        app:met_helperTextColor="#fff"
-        android:hint="Correo electrónico"
-        android:inputType="textEmailAddress"
-        android:id="@+id/registro1_correo"
-        android:layout_centerHorizontal="true"
-        />
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:drawableLeft="@drawable/ic_action_user"
-        android:layout_below="@id/registro1_correo"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textCursorDrawable="@color/colorPrimary"
-        android:cursorVisible="true"
-        android:layout_marginLeft="30dp"
-        app:met_floatingLabel="normal"
-        app:met_textColor="#fff"
-        app:met_textColorHint="#9e9e9e"
-        app:met_underlineColor="#fff"
-        app:met_floatingLabelTextColor="#fff"
-        app:met_baseColor="#fff"
-        app:met_helperTextColor="#fff"
-        android:hint="Nombre"
-        android:inputType="text"
-        android:id="@+id/registro1_nombre"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:drawableLeft="@drawable/ic_action_user"
-        android:layout_below="@id/registro1_nombre"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textCursorDrawable="@color/colorPrimary"
-        android:cursorVisible="true"
-        android:layout_marginLeft="30dp"
-        app:met_floatingLabel="normal"
-        app:met_textColor="#fff"
-        app:met_textColorHint="#9e9e9e"
-        app:met_underlineColor="#fff"
-        app:met_floatingLabelTextColor="#fff"
-        app:met_baseColor="#fff"
-        app:met_helperTextColor="#fff"
-        android:hint="Apellido"
-        android:inputType="text"
-        android:id="@+id/registro1_apellido"
-        android:layout_centerHorizontal="true"
-        />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:drawableLeft="@drawable/ic_action_phone_blue"
-        android:layout_below="@id/registro1_apellido"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textCursorDrawable="@color/colorPrimary"
-        android:cursorVisible="true"
-        android:layout_marginLeft="30dp"
-        app:met_floatingLabel="normal"
-        app:met_textColor="#fff"
-        app:met_textColorHint="#9e9e9e"
-        app:met_underlineColor="#fff"
-        app:met_floatingLabelTextColor="#fff"
-        app:met_baseColor="#fff"
-        app:met_helperTextColor="#fff"
-        android:hint="Teléfono"
-        android:inputType="number"
-        android:id="@+id/registro1_telefono"
-        android:layout_centerHorizontal="true"
-        />
+            <TextView
+                android:id="@+id/registro1_titulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="Registro"
+                android:textColor="#fff"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
-    <RelativeLayout
-        android:id="@+id/registro1_linear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="30dp"
-        android:layout_below="@+id/registro1_telefono">
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/registro1_correo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registro1_titulo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:cursorVisible="true"
+                android:drawableLeft="@drawable/ic_action_phone_mail_blue"
+                android:hint="Correo electrónico"
+                android:inputType="textEmailAddress"
+                android:textCursorDrawable="@color/colorPrimary"
+                app:met_baseColor="#fff"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelTextColor="#fff"
+                app:met_helperTextColor="#fff"
+                app:met_textColor="#fff"
+                app:met_textColorHint="#9e9e9e"
+                app:met_underlineColor="#fff" />
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/registro1_password1"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:cursorVisible="true"
-            android:drawableLeft="@drawable/ic_action_pass"
-            android:hint="Contraseña"
-            android:inputType="textPassword"
-            android:textCursorDrawable="@color/colorPrimary"
-            app:met_baseColor="#fff"
-            app:met_floatingLabel="normal"
-            app:met_floatingLabelTextColor="#fff"
-            app:met_helperTextColor="#fff"
-            app:met_textColor="#fff"
-            app:met_textColorHint="#9e9e9e"
-            app:met_underlineColor="#fff" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/registro1_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registro1_correo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:cursorVisible="true"
+                android:drawableLeft="@drawable/ic_action_user"
+                android:hint="Nombre"
+                android:inputType="text"
+                android:textCursorDrawable="@color/colorPrimary"
+                app:met_baseColor="#fff"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelTextColor="#fff"
+                app:met_helperTextColor="#fff"
+                app:met_textColor="#fff"
+                app:met_textColorHint="#9e9e9e"
+                app:met_underlineColor="#fff" />
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/registro1_password2"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:cursorVisible="true"
-            android:drawableLeft="@drawable/ic_action_pass"
-            android:hint="Contraseña"
-            android:inputType="textPassword"
-            android:textCursorDrawable="@color/colorPrimary"
-            app:met_baseColor="#fff"
-            app:met_floatingLabel="normal"
-            app:met_floatingLabelTextColor="#fff"
-            app:met_helperTextColor="#fff"
-            app:met_textColor="#fff"
-            app:met_textColorHint="#9e9e9e"
-            app:met_underlineColor="#fff" />
-    </RelativeLayout>
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/registro1_apellido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registro1_nombre"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:cursorVisible="true"
+                android:drawableLeft="@drawable/ic_action_user"
+                android:hint="Apellido"
+                android:inputType="text"
+                android:textCursorDrawable="@color/colorPrimary"
+                app:met_baseColor="#fff"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelTextColor="#fff"
+                app:met_helperTextColor="#fff"
+                app:met_textColor="#fff"
+                app:met_textColorHint="#9e9e9e"
+                app:met_underlineColor="#fff" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/registro1_direccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registro1_apellido"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:cursorVisible="true"
+                android:drawableLeft="@drawable/ic_action_house_blue"
+                android:hint="Dirección"
+                android:inputType="text"
+                android:textCursorDrawable="@color/colorPrimary"
+                app:met_baseColor="#fff"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelTextColor="#fff"
+                app:met_helperTextColor="#fff"
+                app:met_textColor="#fff"
+                app:met_textColorHint="#9e9e9e"
+                app:met_underlineColor="#fff" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/registro1_telefono"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registro1_direccion"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:cursorVisible="true"
+                android:drawableLeft="@drawable/ic_action_phone_blue"
+                android:hint="Teléfono"
+                android:inputType="number"
+                android:textCursorDrawable="@color/colorPrimary"
+                app:met_baseColor="#fff"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelTextColor="#fff"
+                app:met_helperTextColor="#fff"
+                app:met_textColor="#fff"
+                app:met_textColorHint="#9e9e9e"
+                app:met_underlineColor="#fff" />
+
+            <RelativeLayout
+                android:id="@+id/registro1_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/registro1_telefono"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="30dp">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/registro1_password1"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:cursorVisible="true"
+                    android:drawableLeft="@drawable/ic_action_pass"
+                    android:hint="Contraseña"
+                    android:inputType="textPassword"
+                    android:textCursorDrawable="@color/colorPrimary"
+                    app:met_baseColor="#fff"
+                    app:met_floatingLabel="normal"
+                    app:met_floatingLabelTextColor="#fff"
+                    app:met_helperTextColor="#fff"
+                    app:met_textColor="#fff"
+                    app:met_textColorHint="#9e9e9e"
+                    app:met_underlineColor="#fff" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/registro1_password2"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:cursorVisible="true"
+                    android:drawableLeft="@drawable/ic_action_pass"
+                    android:hint="Contraseña"
+                    android:inputType="textPassword"
+                    android:textCursorDrawable="@color/colorPrimary"
+                    app:met_baseColor="#fff"
+                    app:met_floatingLabel="normal"
+                    app:met_floatingLabelTextColor="#fff"
+                    app:met_helperTextColor="#fff"
+                    app:met_textColor="#fff"
+                    app:met_textColorHint="#9e9e9e"
+                    app:met_underlineColor="#fff" />
+            </RelativeLayout>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/registro1_dia"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registro1_linear"
+                android:layout_toStartOf="@+id/registro1_mes"
+                android:cursorVisible="true"
+                android:hint="Día"
+                android:inputType="number"
+                android:textCursorDrawable="@color/colorPrimary"
+                app:met_baseColor="#fff"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelTextColor="#fff"
+                android:textAlignment="center"
+                app:met_helperTextColor="#fff"
+                app:met_textColor="#fff"
+                app:met_textColorHint="#9e9e9e"
+                app:met_underlineColor="#fff" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/registro1_mes"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registro1_linear"
+                android:layout_centerHorizontal="true"
+                android:cursorVisible="true"
+                android:hint="Mes"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textCursorDrawable="@color/colorPrimary"
+                app:met_baseColor="#fff"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelTextColor="#fff"
+                app:met_helperTextColor="#fff"
+                app:met_textColor="#fff"
+                app:met_textColorHint="#9e9e9e"
+                app:met_underlineColor="#fff" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/registro1_ano"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registro1_linear"
+                android:layout_toEndOf="@+id/registro1_mes"
+                android:cursorVisible="true"
+                android:hint="Año"
+                android:textAlignment="center"
+                android:inputType="number"
+                app:met_baseColor="#fff"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelTextColor="#fff"
+                app:met_helperTextColor="#fff"
+                app:met_textColor="#fff"
+                app:met_textColorHint="#9e9e9e"
+                app:met_underlineColor="#fff" />
 
 
-    <RadioGroup
-        android:layout_below="@+id/registro1_linear"
-        android:id="@+id/rgroup"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
+            <RadioGroup
+                android:id="@+id/rgroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/registro1_mes"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/radio1"
-            android:text="Hombre"
-            android:buttonTint="@color/colorPrimary"
-            android:textColor="#eeeeee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"/>
+                <RadioButton
+                    android:id="@+id/radio1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimary"
+                    android:checked="true"
+                    android:text="Hombre"
+                    android:textColor="#eeeeee" />
 
-        <RadioButton
-            android:layout_marginLeft="30dp"
-            android:id="@+id/radio2"
-            android:text="Mujer"
-            android:buttonTint="@color/colorPrimary"
-            android:textColor="#eeeeee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+                <RadioButton
+                    android:id="@+id/radio2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:buttonTint="@color/colorPrimary"
+                    android:text="Mujer"
+                    android:textColor="#eeeeee" />
 
-    </RadioGroup>
+            </RadioGroup>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:background="@mipmap/ic_launcher"
-        android:id="@+id/registro1_imagen"
-        android:layout_marginTop="5dp"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/rgroup"
-        android:layout_centerHorizontal="true"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/registro1_imagen"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_below="@+id/rgroup"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:background="@mipmap/ic_launcher" />
 
-    <Button
-        android:id="@+id/registro1_registrar"
-        android:text="Registrar"
-        android:textColor="#fff"
-        android:background="@drawable/round2"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+            <Button
+                android:id="@+id/registro1_registrar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/round2"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:layout_marginTop="30dp"
+                android:text="Registrar"
+                android:layout_below="@id/registro1_imagen"
+                android:textColor="#fff" />
+
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
 
 
 

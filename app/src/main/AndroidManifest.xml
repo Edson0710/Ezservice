@@ -46,7 +46,6 @@
         <activity android:name=".EditarPerfil" />
         <activity android:name=".login1" />
         <activity android:name=".MessageActivity" />
-
         <activity android:name=".Calificar" />
         <activity android:name=".Calificar_comun" />
         <activity android:name=".Registro2" />
@@ -62,25 +61,28 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".PrimerMensaje"></activity>
+        <activity android:name=".PrimerMensaje" />
 
-        <service android:name=".Notifications.MyFirebaseIdService"
+        <service
+            android:name=".Notifications.MyFirebaseIdService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
-        <service android:name=".Notifications.MyFirebaseMessaging"
+        <service
+            android:name=".Notifications.MyFirebaseMessaging"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-
+        <activity android:name=".MainInter" />
+        <activity android:name=".Lista_Inter" />
+        <activity android:name=".ResetPassword"></activity>
     </application>
 
 </manifest>

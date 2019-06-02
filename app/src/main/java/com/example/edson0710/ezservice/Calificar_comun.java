@@ -52,7 +52,7 @@ public class Calificar_comun extends AppCompatActivity {
                 Toast.makeText(Calificar_comun.this, "id_uc: " + id_uc, Toast.LENGTH_SHORT).show();
                 Toast.makeText(Calificar_comun.this, "id_us: " + id_us, Toast.LENGTH_SHORT).show();
                 jsoncall(comentarios, calificacion, date);
-                Intent intent = new Intent(Calificar_comun.this, MainActivity.class);
+                Intent intent = new Intent(Calificar_comun.this, MainServidor.class);
                 intent.putExtra("id", id_uc);
                 startActivity(intent);
             }

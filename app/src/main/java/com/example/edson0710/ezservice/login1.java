@@ -43,9 +43,10 @@ import java.util.HashMap;
 
 public class login1 extends AppCompatActivity {
     Button ingresar;
+    TextView contra;
     MaterialEditText correo, password;
     RadioGroup radio;
-    RadioButton radio1, radio2, radio_sesion;
+    RadioButton radio1, radio2, radio_sesion, radio3;
     int type_obtener;
     int estado_firebase, n_servicios;
 
@@ -76,7 +77,9 @@ public class login1 extends AppCompatActivity {
         radio = findViewById(R.id.rgroup);
         radio1 = findViewById(R.id.radio1);
         radio2 = findViewById(R.id.radio2);
+        radio3 = findViewById(R.id.radio3);
         radio_sesion = findViewById(R.id.radio_sesion);
+        contra = findViewById(R.id.contra);
 
         auth = FirebaseAuth.getInstance();
 
@@ -94,6 +97,14 @@ public class login1 extends AppCompatActivity {
             }
         });
 
+        contra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(login1.this, ResetPassword.class);
+                startActivity(intent);
+            }
+        });
+
 
         ingresar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +113,7 @@ public class login1 extends AppCompatActivity {
                 pass = password.getText().toString();
                 guardarEstado();
                 if (radio1.isChecked()) {
-                    String url = "http://ezservice.tech/loginuser.php?usu=" + correo.getText().toString() + "&cont=" + password.getText().toString();
+                    String url = "http://ezservice.tech/loginuser.php?usu=" + correo.getText().toString();
                     final Intent iniciarAdmin = new Intent(login1.this, MainActivity.class);
                     JsonObjectRequest peticion = new JsonObjectRequest
                             (
@@ -122,10 +133,7 @@ public class login1 extends AppCompatActivity {
                                                         estado_firebase = response.getInt("estado_firebase");
                                                         username = response.getString("nombre");
                                                         n_servicios = response.getInt("n_servicios");
-                                                        if(estado_firebase==0){
-                                                            jsconcall_estado();
-                                                            register(username, email, pass);
-                                                        }
+                                                        jsconcall_estado();
 
                                                         auth.signInWithEmailAndPassword(email, pass)
                                                                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -138,11 +146,11 @@ public class login1 extends AppCompatActivity {
                                                                             guardarTipo(type_obtener);
                                                                             guardarServicios(n_servicios);
                                                                             intent.putExtra("id", id);
-                                                                            Toast.makeText(login1.this, "All is fine", Toast.LENGTH_SHORT).show();
+                                                                            Toast.makeText(login1.this, "Login exitoso", Toast.LENGTH_SHORT).show();
                                                                             startActivity(intent);
                                                                             finish();
                                                                         } else {
-                                                                            Toast.makeText(login1.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                                                                            Toast.makeText(login1.this, "Fallo al ingresar", Toast.LENGTH_SHORT).show();
                                                                         }
                                                                     }
                                                                 });
@@ -160,7 +168,7 @@ public class login1 extends AppCompatActivity {
                                     , new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    Toast.makeText(login1.this, "Error php", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(login1.this, "Error conexión", Toast.LENGTH_SHORT).show();
                                 }
                             });
                     RequestQueue x = Volley.newRequestQueue(login1.this);
@@ -186,16 +194,88 @@ public class login1 extends AppCompatActivity {
                                                         id = response.getString("id");
                                                         estado_firebase = response.getInt("estado_firebase");
                                                         username = response.getString("nombre");
-                                                        if(estado_firebase==0){
-                                                            jsconcall_estado();
-                                                            register(username, email, pass);
-                                                        }
                                                         auth.signInWithEmailAndPassword(email, pass)
                                                                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                                                     @Override
                                                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                                                         if (task.isSuccessful()) {
                                                                             Intent intent = new Intent(login1.this, MainServidor.class);
+                                                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                                            guardarId(id);
+                                                                            guardarTipo(type_obtener);
+                                                                            intent.putExtra("id", id);
+                                                                            Toast.makeText(login1.this, "All is fine", Toast.LENGTH_SHORT).show();
+                                                                            startActivity(intent);
+                                                                            finish();
+                                                                        } else {
+                                                                            Toast.makeText(login1.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                                                                        }
+                                                                    }
+                                                                });
+                                                        //Toast.makeText(login1.this, "Esperando Firebase", Toast.LENGTH_SHORT).show();
+                                                        break;
+                                                    case "YES":
+                                                        type_obtener = 2;
+                                                        id = response.getString("id");
+                                                        estado_firebase = response.getInt("estado_firebase");
+                                                        username = response.getString("nombre");
+                                                        if (estado_firebase == 0) {
+                                                            jsconcall_estado();
+                                                            register(username, email, pass);
+                                                        }
+                                                        Toast.makeText(login1.this, "Primera vez", Toast.LENGTH_SHORT).show();
+                                                        break;
+                                                    case "NO":
+                                                        Toast.makeText(login1.this, "Usuario no existe", Toast.LENGTH_SHORT).show();
+                                                }
+
+
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                    , new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast.makeText(login1.this, "Error php", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                    RequestQueue x = Volley.newRequestQueue(login1.this);
+                    x.add(peticion);
+                }
+
+                if (radio3.isChecked()) {
+                    String url = "http://ezservice.tech/logininter.php?usu=" + correo.getText().toString() + "&cont=" + password.getText().toString();
+                    final Intent iniciarInter = new Intent(login1.this, MainInter.class);
+                    JsonObjectRequest peticion = new JsonObjectRequest
+                            (
+                                    Request.Method.GET,
+                                    url,
+                                    null,
+                                    new Response.Listener<JSONObject>() {
+                                        @Override
+                                        public void onResponse(JSONObject response) {
+                                            try {
+                                                String valor = response.getString("Estado");
+
+                                                switch (valor) {
+                                                    case "OK":
+                                                        type_obtener = 3;
+                                                        id = response.getString("id");
+                                                        estado_firebase = response.getInt("estado_firebase");
+                                                        username = response.getString("nombre");
+                                                        if (estado_firebase == 0) {
+                                                            jsconcall_estado();
+                                                            register(username, email, pass);
+                                                        }
+
+                                                        auth.signInWithEmailAndPassword(email, pass)
+                                                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                                                        if (task.isSuccessful()) {
+                                                                            Intent intent = new Intent(login1.this, MainInter.class);
                                                                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                                             guardarId(id);
                                                                             guardarTipo(type_obtener);
@@ -267,13 +347,13 @@ public class login1 extends AppCompatActivity {
         myEditor.commit();
     }
 
-    private void register(final String username, String email, String password){
+    private void register(final String username, String email, String password) {
 
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             FirebaseUser firebaseUser = auth.getCurrentUser();
                             assert firebaseUser != null;
                             String userid = firebaseUser.getUid();
@@ -281,26 +361,47 @@ public class login1 extends AppCompatActivity {
                             reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
                             HashMap<String, String> hashMap = new HashMap<>();
-                            hashMap.put("id",userid);
+                            hashMap.put("id", userid);
                             hashMap.put("username", username);
 
                             reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()){
-                                        Intent intent = new Intent(login1.this, MainActivity.class);
-                                        if (type_obtener==2) {
-                                            intent = new Intent(login1.this, MainServidor.class);
+                                    if (task.isSuccessful()) {
+                                        Intent intent;
+                                        if (type_obtener == 1) {
+                                            intent = new Intent(login1.this, MainActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            guardarId(id);
+                                            guardarTipo(type_obtener);
+                                            intent.putExtra("id", id);
+                                            intent.putExtra("n_servicios", n_servicios);
+                                            startActivity(intent);
+                                            finish();
+                                            Toast.makeText(login1.this, "", Toast.LENGTH_SHORT).show();
+                                        }
+                                        if (type_obtener == 2) {
+                                            intent = new Intent(login1.this, ResetPassword.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            guardarId(id);
+                                            guardarTipo(type_obtener);
+                                            intent.putExtra("id", id);
+                                            startActivity(intent);
+                                            finish();
+                                            Toast.makeText(login1.this, "", Toast.LENGTH_SHORT).show();
+                                        }
+                                        if (type_obtener == 3) {
+                                            intent = new Intent(login1.this, MainInter.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            guardarId(id);
+                                            guardarTipo(type_obtener);
+                                            intent.putExtra("id", id);
+                                            intent.putExtra("n_servicios", n_servicios);
+                                            startActivity(intent);
+                                            finish();
+                                            Toast.makeText(login1.this, "", Toast.LENGTH_SHORT).show();
                                         }
 
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        guardarId(id);
-                                        guardarTipo(type_obtener);
-                                        intent.putExtra("id", id);
-                                        intent.putExtra("n_servicios", n_servicios);
-                                        startActivity(intent);
-                                        finish();
-                                        Toast.makeText(login1.this, "", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -311,7 +412,7 @@ public class login1 extends AppCompatActivity {
                 });
     }
 
-    public void jsconcall_estado(){
+    public void jsconcall_estado() {
 
 
         if (type_obtener == 1) {
@@ -320,6 +421,9 @@ public class login1 extends AppCompatActivity {
         }
         if (type_obtener == 2) {
             url2 = "http://ezservice.tech/update_estado_firebase_servidor.php?cat=" + id + "&est=" + 1 + "&idf=" + id_firebase;
+        }
+        if (type_obtener == 3) {
+            url2 = "http://ezservice.tech/update_estado_firebase_inter.php?cat=" + id + "&est=" + 1 + "&idf=" + id_firebase;
         }
         JsonObjectRequest peticion = new JsonObjectRequest
                 (
@@ -355,7 +459,6 @@ public class login1 extends AppCompatActivity {
         x.add(peticion);
 
     }
-
 
 
     @Override

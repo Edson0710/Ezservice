@@ -1,6 +1,7 @@
 package com.example.edson0710.ezservice;
 
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,13 +19,23 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.edson0710.ezservice.Notifications.APIService;
+import com.example.edson0710.ezservice.Notifications.Client;
+import com.example.edson0710.ezservice.Notifications.Data;
+import com.example.edson0710.ezservice.Notifications.MyResponse;
+import com.example.edson0710.ezservice.Notifications.Sender;
 import com.example.edson0710.ezservice.Notifications.Token;
 import com.example.edson0710.ezservice.adapters.RecyclerViewAdapterListaServidor;
 import com.example.edson0710.ezservice.models.Lista;
+import com.example.edson0710.ezservice.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
@@ -33,6 +44,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
 
@@ -47,6 +61,11 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
     RecyclerViewAdapterListaServidor myadapter = new RecyclerViewAdapterListaServidor(getContext(), listaInter, id_us);
     int id_uc, estado;
     FirebaseUser firebaseUser;
+    APIService apiService;
+    DatabaseReference reference;
+    boolean mnotify = false;
+    String id_firebase;
+    int id_noti;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,10 +77,9 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
         recycler = (RecyclerView) rootView.findViewById(R.id.recyclerview_lista);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
 
-        //Recieve data
-        //id = getIntent().getExtras().getInt("id");
         JSON_URL = "http://ezservice.tech/lista_interes_servidor.php?cat=" + id_us;
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
 
         jsoncall();
@@ -153,6 +171,8 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
         switch (item.getItemId()) {
             case 121:
                 id_uc = listaInter.get(item.getGroupId()).getId_us();
+                id_firebase = listaInter.get(item.getGroupId()).getId_firebase();
+                id_noti = 3;
                 estado = 3;
                 jsoncall2();
 
@@ -165,16 +185,36 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
                         listaInter = new ArrayList<>();
                         jsoncall();
                         myadapter.notifyDataSetChanged();
-                        Toast.makeText(getContext(), "Usuario Rechazado..." + id_us + " " + id_uc + " " + estado, Toast.LENGTH_SHORT).show();
+
 
                     }
                 }, 500);
+                jsoncall3();
+                mnotify = true;
+                reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        User user = dataSnapshot.getValue(User.class);
+                        if (mnotify) {
+                            sendNotificaction(id_firebase, user.getUsername(), "hola");
+                        }
+                        mnotify = false;
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
 
                 return true;
 
             case 122:
                 id_uc = listaInter.get(item.getGroupId()).getId_us();
+                id_firebase = listaInter.get(item.getGroupId()).getId_firebase();
+                id_noti = 2;
                 estado = 2;
                 jsoncall2();
 
@@ -187,15 +227,71 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
                         listaInter = new ArrayList<>();
                         jsoncall();
                         myadapter.notifyDataSetChanged();
-                        Toast.makeText(getContext(), "Usuario Aceptado..." + id_us + " " + id_uc + " " + estado, Toast.LENGTH_SHORT).show();
 
                     }
                 }, 500);
+
+                jsoncall3();
+                mnotify = true;
+                reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        User user = dataSnapshot.getValue(User.class);
+                        if (mnotify) {
+                            sendNotificaction(id_firebase, user.getUsername(), "hola");
+                        }
+                        mnotify = false;
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
                 return true;
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    private void sendNotificaction(String receiver, final String username, final String message) {
+        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
+        Query query = tokens.orderByKey().equalTo(receiver); //Ojo tambien
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Token token = snapshot.getValue(Token.class);
+                    String bodys = username + ": " + message;
+                    Data data = new Data(firebaseUser.getUid(), R.drawable.icono3, bodys, "Nuevo Mensaje",
+                            id_firebase);
+                    Sender sender = new Sender(data, token.getToken());
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<MyResponse>() {
+                                @Override
+                                public void onResponse(Call<MyResponse> call, retrofit2.Response<MyResponse> response) {
+                                    if (response.code() == 200) {
+                                        if (response.body().success != 1) {
+                                            Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<MyResponse> call, Throwable t) {
+
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void jsoncall2() {
@@ -235,10 +331,47 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
         x.add(peticion);
     }
 
-    private void updateToken(String token){
+    private void updateToken(String token) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
         Token token1 = new Token(token);
         reference.child(firebaseUser.getUid()).setValue(token1);
+    }
+
+    public void jsoncall3() {
+        String url = "http://ezservice.tech/crear_notificacion.php?tipo=" + 1 + "&id_user=" + id_uc + "&id_noti=" + id_noti;
+        JsonObjectRequest peticion = new JsonObjectRequest
+                (
+                        Request.Method.GET,
+                        url,
+                        null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    String valor = response.getString("Estado");
+
+                                    switch (valor) {
+                                        case "OK":
+
+                                            break;
+                                        case "NO":
+                                            //Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                                    }
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        , new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Toast.makeText(getApplicationContext(), "Error php", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        RequestQueue x = Volley.newRequestQueue(getContext());
+        x.add(peticion);
     }
 
 }

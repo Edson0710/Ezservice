@@ -1,11 +1,9 @@
 package com.example.edson0710.ezservice;
 
-import android.content.SharedPreferences;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,12 +36,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListaInteres extends Fragment {
+public class Lista_Inter extends Fragment {
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
     String id_uc;
-    private String JSON_URL = "http://ezservice.tech/lista_interes.php?cat=" + id_uc;
+    private String JSON_URL = "http://ezservice.tech/lista_intermedio.php?cat=" + id_uc;
     private JsonArrayRequest ArrayRequest;
     private RequestQueue requestQueue;
     RecyclerView recycler;
@@ -63,17 +61,17 @@ public class ListaInteres extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe2);
 
 
-        JSON_URL = "http://ezservice.tech/lista_interes.php?cat=" + id_uc;
+        JSON_URL = "http://ezservice.tech/lista_intermedio.php?cat=" + id_uc;
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         jsoncall();
-
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 listaInter = new ArrayList<>();
                 jsoncall();
+
                 Handler handler = new Handler();
 
                 handler.postDelayed(new Runnable() {
@@ -109,10 +107,8 @@ public class ListaInteres extends Fragment {
                         lista.setImagen(jsonObject.getString("imagen"));
                         lista.setProfesion(jsonObject.getString("profesion"));
                         lista.setId_us(jsonObject.getInt("id_us"));
-                        lista.setEstado(jsonObject.getString("estado"));
                         lista.setId_firebase(jsonObject.getString("id_firebase"));
                         lista.setTelefono(jsonObject.getDouble("telefono"));
-                        lista.setChat(jsonObject.getInt("chat"));
 
                         listaInter.add(lista);
 
@@ -157,10 +153,6 @@ public class ListaInteres extends Fragment {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 121:
-                int cantidad = obtenerLista();
-                cantidad -= 1;
-                guardarLista(cantidad);
-                Toast.makeText(getContext(), "Lista:" + cantidad, Toast.LENGTH_SHORT).show();
                 id_us = listaInter.get(item.getGroupId()).getId_us();
                 jsoncall2();
                 Toast.makeText(getContext(), "Usuario eliminado...", Toast.LENGTH_SHORT).show();
@@ -217,20 +209,5 @@ public class ListaInteres extends Fragment {
         Token token1 = new Token(token);
         reference.child(firebaseUser.getUid()).setValue(token1);
     }
-
-    public void guardarLista(int my_type) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        SharedPreferences.Editor myEditor = preferences.edit();
-        myEditor.putInt("LISTA", my_type);
-        myEditor.commit();
-    }
-
-    public int obtenerLista() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        int type_preference = preferences.getInt("LISTA", 0);
-        return type_preference;
-    }
-
-    
 
 }

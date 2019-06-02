@@ -28,6 +28,10 @@ public class Calificar extends AppCompatActivity {
     EditText comentario, costo;
     String url2, id_uc;
     int id_us;
+    String date;
+    float calificacion;
+    String comentarios;
+    String costos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +49,15 @@ public class Calificar extends AppCompatActivity {
         finalizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-                float calificacion = ratingBar.getRating();
-                String comentarios = comentario.getText().toString();
-                String costos = costo.getText().toString();
+                date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                calificacion = ratingBar.getRating();
+                comentarios = comentario.getText().toString();
+                costos = costo.getText().toString();
                 Toast.makeText(Calificar.this, "Calificacion: " + calificacion, Toast.LENGTH_SHORT).show();
                 Toast.makeText(Calificar.this, "id_uc: " + id_uc, Toast.LENGTH_SHORT).show();
                 Toast.makeText(Calificar.this, "id_us: " + id_us, Toast.LENGTH_SHORT).show();
                 jsoncall(comentarios, costos, calificacion, date);
+                jsoncall2();
                 Intent intent = new Intent(Calificar.this, MainActivity.class);
                 intent.putExtra("id", id_uc);
                 startActivity(intent);
@@ -98,5 +103,43 @@ public class Calificar extends AppCompatActivity {
         RequestQueue x = Volley.newRequestQueue(Calificar.this);
         x.add(peticion);
 
+    }
+
+    private void jsoncall2() {
+        String url = "http://ezservice.tech/email_final.php?id_uc=" + id_uc +
+                "&costo=" + costos + "&fecha=" + date + "&comentario=" + comentarios + "&calificacion=" + calificacion;
+
+        JsonObjectRequest peticion = new JsonObjectRequest
+                (
+                        Request.Method.GET,
+                        url,
+                        null,
+                        new com.android.volley.Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    String valor = response.getString("Estado");
+                                    switch (valor) {
+                                        case "OK":
+                                            //Toast.makeText(getContext(), "Usuario ya solicitado", Toast.LENGTH_SHORT).show();
+                                            break;
+                                        case "NO":
+                                            //Toast.makeText(getContext(), "Añadido con éxito", Toast.LENGTH_SHORT).show();
+                                            break;
+                                    }
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        , new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                });
+        RequestQueue x = Volley.newRequestQueue(Calificar.this);
+        x.add(peticion);
     }
 }

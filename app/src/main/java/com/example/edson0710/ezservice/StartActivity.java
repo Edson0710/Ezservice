@@ -47,6 +47,12 @@ public class StartActivity extends AppCompatActivity implements ActivityCompat.O
                     startActivity(iniciarAdmin);
                     finish();
                 }
+                if (type_obtener == 3) {
+                    Intent iniciarAdmin = new Intent(StartActivity.this, MainInter.class);
+                    iniciarAdmin.putExtra("id", id_obtener);
+                    startActivity(iniciarAdmin);
+                    finish();
+                }
             }
         }
     }

@@ -8,7 +8,7 @@ public class TarjetaUsuario {
     private int id;
     private double calificacion, latitud, longitud;
     private String descripcion;
-    private String distancia;
+    private String distancia, id_firebase;
 
     public TarjetaUsuario() {
         this.imagen = imagen;
@@ -20,6 +20,7 @@ public class TarjetaUsuario {
         this.latitud = latitud;
         this.longitud = longitud;
         this.distancia = distancia;
+        this.id_firebase = id_firebase;
     }
 
     public String getImagen() {
@@ -92,5 +93,13 @@ public class TarjetaUsuario {
 
     public void setDistancia(String distancia) {
         this.distancia = distancia;
+    }
+
+    public String getId_firebase() {
+        return id_firebase;
+    }
+
+    public void setId_firebase(String id_firebase) {
+        this.id_firebase = id_firebase;
     }
 }
