@@ -45,7 +45,6 @@ public class Profesiones extends AppCompatActivity {
         longitud = getIntent().getExtras().getDouble("longitud");
         distancia = getIntent().getExtras().getInt("distancia");
         calificacion = getIntent().getExtras().getFloat("calificacion");
-        Toast.makeText(Profesiones.this, "c: " + calificacion, Toast.LENGTH_SHORT).show();
 
         JSON_URL = "http://ezservice.tech/profesiones.php?cat=" + id;
         //ini views

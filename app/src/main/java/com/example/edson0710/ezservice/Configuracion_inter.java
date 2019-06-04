@@ -2,6 +2,7 @@ package com.example.edson0710.ezservice;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +16,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,16 +27,13 @@ import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
-public class Configuracion extends Fragment {
-    String id, nombre, apellido, imagen, calificacion;
+public class Configuracion_inter extends Fragment {
+    String id, nombre, apellido, imagen;
     Button cerrarSesion;
-    TextView tv_nombre, tv_calificacion, tv_historial, tv_editar;
+    TextView tv_nombre, tv_calificacion;
     ImageView iv_imagen;
     private RequestOptions option;
 
@@ -46,7 +42,7 @@ public class Configuracion extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_configuracion, container, false);
+        final View rootView = inflater.inflate(R.layout.activity_configuracion_inter, container, false);
 
         id = getArguments().getString("id");
         option = new RequestOptions().centerCrop().placeholder(R.drawable.loading_shape).error(R.drawable.loading_shape);
@@ -56,32 +52,11 @@ public class Configuracion extends Fragment {
 
         cerrarSesion = rootView.findViewById(R.id.btn_configuracion);
         tv_nombre = rootView.findViewById(R.id.tv1_configuracion);
-        tv_historial = rootView.findViewById(R.id.tv3_historial);
         tv_calificacion = rootView.findViewById(R.id.tv2_configuracion);
         iv_imagen = rootView.findViewById(R.id.iv_configuracion);
-        tv_editar = rootView.findViewById(R.id.tv4_editar);
 
 
         jsoncall();
-
-        tv_historial.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(rootView.getContext(), Historial.class);
-                intent.putExtra("id", id);
-                startActivity(intent);
-            }
-        });
-
-        tv_editar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(rootView.getContext(), EditarPerfil.class);
-                intent.putExtra("id", id);
-                startActivity(intent);
-
-            }
-        });
 
         cerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +74,7 @@ public class Configuracion extends Fragment {
     }
 
     void jsoncall() {
-        String url = "http://ezservice.tech/miperfil.php?cat=" + id;
+        String url = "http://ezservice.tech/miperfil_inter.php?cat=" + id;
         JsonObjectRequest peticion = new JsonObjectRequest
                 (
                         Request.Method.GET,
@@ -111,10 +86,8 @@ public class Configuracion extends Fragment {
                                 try {
                                     nombre = response.getString("nombre");
                                     apellido = response.getString("apellido");
-                                    calificacion = response.getString("calificacion");
                                     imagen = response.getString("imagen");
                                     tv_nombre.setText(nombre + " " + apellido);
-                                    tv_calificacion.setText(calificacion);
                                     Picasso.with(getContext()).load(imagen).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE).into(iv_imagen);
 
 
@@ -132,6 +105,4 @@ public class Configuracion extends Fragment {
         RequestQueue x = Volley.newRequestQueue(getContext());
         x.add(peticion);
     }
-
-
 }

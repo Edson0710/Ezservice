@@ -48,7 +48,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -125,15 +127,11 @@ public class TarjetasServidores extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                int cantidad = obtenerLista();
-                if (cantidad < 5) {
                     int tipo = obtenerTipo();
                     if (tipo == 1) {
-                        cantidad +=1;
-                        guardarLista(cantidad);
-                        Toast.makeText(TarjetasServidores.this, "lista:" + cantidad, Toast.LENGTH_SHORT).show();
                         id_us = models.get(viewPager.getCurrentItem()).getId();
-                        url = "http://ezservice.tech/add_lista.php?id_uc=" + id_uc + "&id_us=" + id_us + "&est=" + 1;
+                        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                        url = "http://ezservice.tech/add_lista.php?id_uc=" + id_uc + "&id_us=" + id_us + "&est=" + 1 + "&date=" + date;
                         jsoncall2();
                         url2 = "http://ezservice.tech/crear_notificacion.php?tipo=" + 2 + "&id_user=" + id_us + "&id_noti=" + 1;
                         jsoncall3();
@@ -156,8 +154,6 @@ public class TarjetasServidores extends AppCompatActivity {
                         });
                     }
                     if (tipo == 3) {
-                        cantidad +=1;
-                        guardarLista(cantidad);
                         id_us = models.get(viewPager.getCurrentItem()).getId();
                         url = "http://ezservice.tech/add_contratar.php?id_in=" + id_uc + "&id_us=" + id_us;
                         jsoncall2();
@@ -182,15 +178,6 @@ public class TarjetasServidores extends AppCompatActivity {
                         });
                     }
 
-
-                } else {
-                    Toast.makeText(TarjetasServidores.this, "Tu lista esta llena", Toast.LENGTH_SHORT).show();
-                }
-
-                //removePage(viewPager.getCurrentItem());
-                //viewPager.removeViewAt(viewPager.getCurrentItem());
-                //models.remove(viewPager.getCurrentItem());
-                //adapter.notifyDataSetChanged();
             }
         });
     }
@@ -255,6 +242,7 @@ public class TarjetasServidores extends AppCompatActivity {
                         tarjetaUsuario.setLatitud(jsonObject.getDouble("latitud"));
                         tarjetaUsuario.setLongitud(jsonObject.getDouble("longitud"));
                         tarjetaUsuario.setId_firebase(jsonObject.getString("id_firebase"));
+                        tarjetaUsuario.setOcupacion(jsonObject.getString("ocupacion"));
 
 
                         Location locationA = new Location("punto A");
@@ -327,6 +315,9 @@ public class TarjetasServidores extends AppCompatActivity {
                                             break;
                                         case "NO":
                                             Toast.makeText(TarjetasServidores.this, "Añadido con éxito", Toast.LENGTH_SHORT).show();
+                                            break;
+                                        case "YES":
+                                            Toast.makeText(TarjetasServidores.this, "Lista en espera llena", Toast.LENGTH_SHORT).show();
                                     }
 
 
@@ -418,34 +409,5 @@ public class TarjetasServidores extends AppCompatActivity {
         return type_preference;
     }
 
-    public void removePage(int position) {
-        if ((position < 0) || (position >= models.size()) || (models.size() <= 1)) {
-
-        } else {
-            if (position == viewPager.getCurrentItem()) {
-                if (position == (models.size() - 1)) {
-                    viewPager.setCurrentItem(position - 1);
-                } else if (position == 0) {
-                    viewPager.setCurrentItem(1);
-                }
-            }
-            viewPager.removeViewAt(viewPager.getCurrentItem());
-            models.remove(viewPager.getCurrentItem());
-            adapter.notifyDataSetChanged();
-        }
-    }
-
-    public void guardarLista(int my_type) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(TarjetasServidores.this);
-        SharedPreferences.Editor myEditor = preferences.edit();
-        myEditor.putInt("LISTA", my_type);
-        myEditor.commit();
-    }
-
-    public int obtenerLista() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(TarjetasServidores.this);
-        int type_preference = preferences.getInt("LISTA", 0);
-        return type_preference;
-    }
 
 }

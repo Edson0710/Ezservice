@@ -59,7 +59,6 @@ public class RecyclerViewAdapterLista extends RecyclerView.Adapter<RecyclerViewA
                 int chat = mData2.get(viewHolder.getAdapterPosition()).getChat();
                 double telefono = mData2.get(viewHolder.getAdapterPosition()).getTelefono();
                 int id_us = mData2.get(viewHolder.getAdapterPosition()).getId_us();
-                Toast.makeText(mContext2, "Seleccionaste: "+prueba, Toast.LENGTH_SHORT).show();
                 if (obtenerTipo() == 1) {
                     if (prueba.equals("Aceptado") && chat == 0) {
                         Intent intent = new Intent(mContext2, PrimerMensaje.class);
@@ -106,6 +105,10 @@ public class RecyclerViewAdapterLista extends RecyclerView.Adapter<RecyclerViewA
         holder.tv_nombre.setText(mData2.get(position).getNombre());
         holder.tv_profesion.setText(mData2.get(position).getProfesion());
         holder.tv_estado.setText(mData2.get(position).getEstado());
+        if (obtenerTipo() == 3){
+            holder.tv_estado.setVisibility(View.INVISIBLE);
+            holder.tv_estado2.setVisibility(View.INVISIBLE);
+        }
 
         //Load image from Internet
 
@@ -123,7 +126,7 @@ public class RecyclerViewAdapterLista extends RecyclerView.Adapter<RecyclerViewA
 
         TextView tv_nombre;
         TextView tv_profesion;
-        TextView tv_estado;
+        TextView tv_estado, tv_estado2;
         ImageView iv_imagen;
         LinearLayout container3;
 
@@ -134,6 +137,7 @@ public class RecyclerViewAdapterLista extends RecyclerView.Adapter<RecyclerViewA
             tv_profesion = itemView.findViewById(R.id.lista_profesion);
             iv_imagen = itemView.findViewById(R.id.lista_imagen);
             tv_estado = itemView.findViewById(R.id.lista_estado2);
+            tv_estado2 = itemView.findViewById(R.id.lista_estado);
             container3 = itemView.findViewById(R.id.container_lista);
             container3.setOnCreateContextMenuListener(this);
 

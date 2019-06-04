@@ -96,10 +96,36 @@
                 android:textColor="#fff" />
 
             <TextView
+                android:id="@+id/edad_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_below="@+id/nombre_cardview"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:text="ocupacion"
+                android:textColor="#fff" />
+
+            <TextView
+                android:id="@+id/ocupacion_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_below="@+id/edad_cardview"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:text="10 años"
+                android:textColor="#fff" />
+
+            <TextView
                 android:id="@+id/km_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/nombre_cardview"
+                android:layout_below="@+id/ocupacion_cardview"
                 android:layout_marginLeft="16dp"
                 android:textStyle="bold"
                 android:layout_marginRight="16dp"

@@ -53,14 +53,8 @@ public class Calificar extends AppCompatActivity {
                 calificacion = ratingBar.getRating();
                 comentarios = comentario.getText().toString();
                 costos = costo.getText().toString();
-                Toast.makeText(Calificar.this, "Calificacion: " + calificacion, Toast.LENGTH_SHORT).show();
-                Toast.makeText(Calificar.this, "id_uc: " + id_uc, Toast.LENGTH_SHORT).show();
-                Toast.makeText(Calificar.this, "id_us: " + id_us, Toast.LENGTH_SHORT).show();
                 jsoncall(comentarios, costos, calificacion, date);
-                jsoncall2();
-                Intent intent = new Intent(Calificar.this, MainActivity.class);
-                intent.putExtra("id", id_uc);
-                startActivity(intent);
+
             }
         });
 
@@ -82,11 +76,14 @@ public class Calificar extends AppCompatActivity {
                                     String valor = response.getString("Estado");
                                     switch (valor) {
                                         case "OK":
-                                            //Toast.makeText(EditarPerfil.this, "Fallo al actualizar", Toast.LENGTH_SHORT).show();
+                                            jsoncall2();
+                                            Intent intent = new Intent(Calificar.this, MainActivity.class);
+                                            intent.putExtra("id", id_uc);
+                                            startActivity(intent);
                                             break;
                                         case "NO":
 
-                                            //Toast.makeText(EditarPerfil.this, "Datos actualizados", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Calificar.this, "No se permiten groserias", Toast.LENGTH_SHORT).show();
                                             break;
                                     }
                                 } catch (JSONException e) {

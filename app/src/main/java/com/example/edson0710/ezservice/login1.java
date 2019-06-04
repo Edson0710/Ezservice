@@ -247,7 +247,7 @@ public class login1 extends AppCompatActivity {
 
                 if (radio3.isChecked()) {
                     String url = "http://ezservice.tech/logininter.php?usu=" + correo.getText().toString() + "&cont=" + password.getText().toString();
-                    final Intent iniciarInter = new Intent(login1.this, MainInter.class);
+                    final Intent iniciar = new Intent(login1.this, MainInter.class);
                     JsonObjectRequest peticion = new JsonObjectRequest
                             (
                                     Request.Method.GET,
@@ -258,18 +258,12 @@ public class login1 extends AppCompatActivity {
                                         public void onResponse(JSONObject response) {
                                             try {
                                                 String valor = response.getString("Estado");
-
                                                 switch (valor) {
                                                     case "OK":
                                                         type_obtener = 3;
                                                         id = response.getString("id");
                                                         estado_firebase = response.getInt("estado_firebase");
                                                         username = response.getString("nombre");
-                                                        if (estado_firebase == 0) {
-                                                            jsconcall_estado();
-                                                            register(username, email, pass);
-                                                        }
-
                                                         auth.signInWithEmailAndPassword(email, pass)
                                                                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                                                     @Override
@@ -288,6 +282,18 @@ public class login1 extends AppCompatActivity {
                                                                         }
                                                                     }
                                                                 });
+                                                        //Toast.makeText(login1.this, "Esperando Firebase", Toast.LENGTH_SHORT).show();
+                                                        break;
+                                                    case "YES":
+                                                        type_obtener = 3;
+                                                        id = response.getString("id");
+                                                        estado_firebase = response.getInt("estado_firebase");
+                                                        username = response.getString("nombre");
+                                                        if (estado_firebase == 0) {
+                                                            jsconcall_estado();
+                                                            register(username, email, pass);
+                                                        }
+                                                        Toast.makeText(login1.this, "Primera vez", Toast.LENGTH_SHORT).show();
                                                         break;
                                                     case "NO":
                                                         Toast.makeText(login1.this, "Usuario no existe", Toast.LENGTH_SHORT).show();

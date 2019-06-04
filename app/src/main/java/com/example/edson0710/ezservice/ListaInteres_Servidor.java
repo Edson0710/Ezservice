@@ -42,7 +42,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -66,6 +68,7 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
     boolean mnotify = false;
     String id_firebase;
     int id_noti;
+    String date;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -295,7 +298,8 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
     }
 
     public void jsoncall2() {
-        String url = "http://ezservice.tech/update_estado.php?id_uc=" + id_uc + "&id_us=" + id_us + "&est=" + estado;
+        date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String url = "http://ezservice.tech/update_estado.php?id_uc=" + id_uc + "&id_us=" + id_us + "&est=" + estado + "&date=" + date;
 
         JsonObjectRequest peticion = new JsonObjectRequest
                 (

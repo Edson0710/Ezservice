@@ -1,5 +1,7 @@
 package com.example.edson0710.ezservice;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -76,6 +78,23 @@ public class Comentarios extends AppCompatActivity {
 
 
                 }
+
+                if (lista2 == null || lista2.size() == 0) {
+                    AlertDialog.Builder myBuild = new AlertDialog.Builder(Comentarios.this);
+                    myBuild.setMessage("Este usuario aún no tiene comentarios");
+                    myBuild.setTitle("Ezservice");
+                    myBuild.setCancelable(false);
+                    myBuild.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+
+                    AlertDialog dialog = myBuild.create();
+                    dialog.show();
+                }
+
 
                 setuprecyclerview2(lista2);
 

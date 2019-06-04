@@ -58,7 +58,7 @@ public class CardViewAdapterTarjeta extends PagerAdapter {
         final View view = layoutInflater.inflate(R.layout.item_cardview, container, false);
 
         ImageView imagen;
-        TextView nombre, distancia, calificacion, descripcion;
+        TextView nombre, distancia, calificacion, descripcion, edad, ocupacion;
         Button comentarios;
         TextView contador;
 
@@ -69,12 +69,16 @@ public class CardViewAdapterTarjeta extends PagerAdapter {
         calificacion = view.findViewById(R.id.calificacion_cardview);
         comentarios = view.findViewById(R.id.btn_comentarios);
         contador = view.findViewById(R.id.contador);
+        edad = view.findViewById(R.id.edad_cardview);
+        ocupacion = view.findViewById(R.id.ocupacion_cardview);
 
         contador.setText(position + 1 + " de " + models.size());
         nombre.setText(models.get(position).getNombre());
         descripcion.setText(models.get(position).getDescripcion());
+        edad.setText(""+models.get(position).getEdad() + " años");
         distancia.setText(models.get(position).getDistancia()+ " Km");
         calificacion.setText("" + models.get(position).getCalificacion());
+        ocupacion.setText(models.get(position).getOcupacion());
         //Load image from Internet
 
         Glide.with(context).load(models.get(position).getImagen()).apply(option.circleCropTransform()).into(imagen);

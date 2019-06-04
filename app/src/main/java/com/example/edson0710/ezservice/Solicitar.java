@@ -80,8 +80,6 @@ public class Solicitar extends Fragment implements ActivityCompat.OnRequestPermi
             location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             lat = location.getLatitude();
             lon = location.getLongitude();
-            Toast.makeText(getContext(), "lat" + lat, Toast.LENGTH_SHORT).show();
-            Toast.makeText(getContext(), "lon" + lon, Toast.LENGTH_SHORT).show();
         }
 
 

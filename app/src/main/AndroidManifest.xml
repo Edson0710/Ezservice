@@ -82,7 +82,10 @@
 
         <activity android:name=".MainInter" />
         <activity android:name=".Lista_Inter" />
-        <activity android:name=".ResetPassword"></activity>
+        <activity android:name=".ResetPassword" />
+        <activity android:name=".Calendario" />
+        <activity android:name=".Configuracion_inter" />
+        <activity android:name=".Ofertas"></activity>
     </application>
 
 </manifest>

@@ -48,13 +48,8 @@ public class Calificar_comun extends AppCompatActivity {
                 String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
                 float calificacion = ratingBar.getRating();
                 String comentarios = comentario.getText().toString();
-                Toast.makeText(Calificar_comun.this, "Calificacion: " + calificacion, Toast.LENGTH_SHORT).show();
-                Toast.makeText(Calificar_comun.this, "id_uc: " + id_uc, Toast.LENGTH_SHORT).show();
-                Toast.makeText(Calificar_comun.this, "id_us: " + id_us, Toast.LENGTH_SHORT).show();
                 jsoncall(comentarios, calificacion, date);
-                Intent intent = new Intent(Calificar_comun.this, MainServidor.class);
-                intent.putExtra("id", id_uc);
-                startActivity(intent);
+
             }
         });
 
@@ -76,11 +71,12 @@ public class Calificar_comun extends AppCompatActivity {
                                     String valor = response.getString("Estado");
                                     switch (valor) {
                                         case "OK":
-                                            //Toast.makeText(EditarPerfil.this, "Fallo al actualizar", Toast.LENGTH_SHORT).show();
-                                            break;
+                                            Intent intent = new Intent(Calificar_comun.this, MainServidor.class);
+                                            intent.putExtra("id", id_uc);
+                                            startActivity(intent);                                            break;
                                         case "NO":
 
-                                            //Toast.makeText(EditarPerfil.this, "Datos actualizados", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Calificar_comun.this, "No se permiten groserias", Toast.LENGTH_SHORT).show();
                                             break;
                                     }
                                 } catch (JSONException e) {

@@ -30,9 +30,12 @@ import com.google.firebase.database.ValueEventListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MainServidor extends AppCompatActivity {
 
-    String id, id_firebase, url2;
+    String id, id_firebase, url2, date;
 
     FirebaseUser firebaseUser;
     DatabaseReference reference;
@@ -69,8 +72,8 @@ public class MainServidor extends AppCompatActivity {
                 User user = dataSnapshot.getValue(User.class);
                 //username.setText(user.getId());
                 id_firebase = user.getId();
+                date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
                 json_firebase();
-                Toast.makeText(MainServidor.this, ""+id_firebase, Toast.LENGTH_SHORT).show();
 
             }
 
@@ -117,7 +120,12 @@ public class MainServidor extends AppCompatActivity {
                     ListaInteres_Servidor list = new ListaInteres_Servidor();
                     list.setArguments(bundle);
                     return list;
+
                 case 1:
+                    Ofertas list_i = new Ofertas();
+                    list_i.setArguments(bundle);
+                    return list_i;
+                case 2:
                     Configuracion_Server confi = new Configuracion_Server();
                     confi.setArguments(bundle);
                     return confi;
@@ -130,7 +138,7 @@ public class MainServidor extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 2 total pages.
-            return 2;
+            return 3;
         }
 
         @Nullable
@@ -140,6 +148,8 @@ public class MainServidor extends AppCompatActivity {
                 case 0:
                     return "Lista";
                 case 1:
+                    return "Ofertas";
+                case 2:
                     return "Configuracion";
 
 
@@ -149,9 +159,10 @@ public class MainServidor extends AppCompatActivity {
     }
 
 
-    public void json_firebase(){
+    public void json_firebase() {
 
-            url2 = "http://ezservice.tech/update_estado_firebase_servidor.php?cat=" + id + "&est=" + 1 + "&idf=" + id_firebase;
+        url2 = "http://ezservice.tech/update_estado_firebase_servidor.php?cat=" + id + "&est=" + 1 + "&idf=" + id_firebase +
+                "&date=" + date;
         JsonObjectRequest peticion = new JsonObjectRequest
                 (
                         Request.Method.GET,

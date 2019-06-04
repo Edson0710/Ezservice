@@ -131,12 +131,12 @@ public class MainInter extends AppCompatActivity {
                     Lista_Inter list = new Lista_Inter();
                     list.setArguments(bundle);
                     return list;
-                    /*
+
                 case 2:
-                    Configuracion confi = new Configuracion();
+                    Configuracion_inter confi = new Configuracion_inter();
                     confi.setArguments(bundle);
                     return confi;
-*/
+
                 default:
                     return null;
             }
@@ -145,7 +145,7 @@ public class MainInter extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
 
         @Nullable
@@ -154,10 +154,10 @@ public class MainInter extends AppCompatActivity {
             switch (position) {
                 case 0:
                     return "Categorias";
-               /*case 1:
+                case 1:
                     return "Lista";
                 case 2:
-                    return "Configuracion";*/
+                    return "Configuracion";
 
 
             }

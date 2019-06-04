@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorFondo"
+    tools:context=".Configuracion_inter">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_configuracion"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:id="@+id/tv1_configuracion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/iv_configuracion"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:text="Nombre"
+        android:textStyle="bold"
+        android:textSize="20sp" />
+
+
+
+    <Button
+        android:id="@+id/btn_configuracion"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="110dp"
+        android:layout_marginRight="110dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/round2"
+        android:textColor="#fff"
+        android:text="Cerrar sesion" />
+
+</RelativeLayout>
+
+
+
+
