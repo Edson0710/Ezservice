@@ -14,11 +14,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.edson0710.ezservice.Comentarios;
+import com.example.edson0710.ezservice.Documentos;
 import com.example.edson0710.ezservice.Profesiones;
 import com.example.edson0710.ezservice.R;
 import com.example.edson0710.ezservice.TarjetasServidores;
 import com.example.edson0710.ezservice.models.TarjetaUsuario;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import static com.example.edson0710.ezservice.R.id.imagen_cardview;
@@ -29,6 +31,8 @@ public class CardViewAdapterTarjeta extends PagerAdapter {
     private LayoutInflater layoutInflater;
     private Context context;
     private RequestOptions option;
+    DecimalFormat format1 = new DecimalFormat("#.##");
+
 
 
     public CardViewAdapterTarjeta(List<TarjetaUsuario> models, Context context) {
@@ -59,7 +63,7 @@ public class CardViewAdapterTarjeta extends PagerAdapter {
 
         ImageView imagen;
         TextView nombre, distancia, calificacion, descripcion, edad, ocupacion;
-        Button comentarios;
+        Button comentarios, documentos;
         TextView contador;
 
         imagen = view.findViewById(imagen_cardview);
@@ -71,6 +75,7 @@ public class CardViewAdapterTarjeta extends PagerAdapter {
         contador = view.findViewById(R.id.contador);
         edad = view.findViewById(R.id.edad_cardview);
         ocupacion = view.findViewById(R.id.ocupacion_cardview);
+        documentos = view.findViewById(R.id.btn_documentos);
 
         contador.setText(position + 1 + " de " + models.size());
         nombre.setText(models.get(position).getNombre());
@@ -91,6 +96,15 @@ public class CardViewAdapterTarjeta extends PagerAdapter {
                 context.startActivity(i);
 
 
+            }
+        });
+
+        documentos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, Documentos.class);
+                intent.putExtra("id",models.get(position).getId());
+                context.startActivity(intent);
             }
         });
 

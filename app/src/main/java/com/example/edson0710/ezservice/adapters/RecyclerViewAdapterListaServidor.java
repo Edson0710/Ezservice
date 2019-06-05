@@ -2,6 +2,7 @@ package com.example.edson0710.ezservice.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.edson0710.ezservice.Calificar_comun;
 import com.example.edson0710.ezservice.MessageActivity;
+import com.example.edson0710.ezservice.PagoRecibido;
 import com.example.edson0710.ezservice.R;
 import com.example.edson0710.ezservice.models.Lista;
 
@@ -53,7 +55,6 @@ public class RecyclerViewAdapterListaServidor extends RecyclerView.Adapter<Recyc
                 String imagenURL = mData2.get(viewHolder.getAdapterPosition()).getImagen();
                 double telefono = mData2.get(viewHolder.getAdapterPosition()).getTelefono();
                 int id_us = mData2.get(viewHolder.getAdapterPosition()).getId_us();
-                Toast.makeText(mContext2, "Seleccionaste: "+prueba, Toast.LENGTH_SHORT).show();
                 if (prueba.equals("Aceptado")){
                     Intent intent = new Intent(mContext2, MessageActivity.class);
                     intent.putExtra("userid", id_firebase);
@@ -73,6 +74,12 @@ public class RecyclerViewAdapterListaServidor extends RecyclerView.Adapter<Recyc
                     intent.putExtra("id_us", id_us);
                     mContext2.startActivity(intent);
                 }
+                if (prueba.equals("Pendiente")){
+                    Intent intent = new Intent(mContext2, PagoRecibido.class);
+                    intent.putExtra("id_us", id_us);
+                    intent.putExtra("id_uc", id_uc);
+                    mContext2.startActivity(intent);
+                }
             }
         });
 
@@ -86,6 +93,10 @@ public class RecyclerViewAdapterListaServidor extends RecyclerView.Adapter<Recyc
         //holder.tv_id.setText(""+mData2.get(position).getId());
         holder.tv_nombre.setText(mData2.get(position).getNombre());
         holder.tv_estado.setText(mData2.get(position).getEstado());
+        String estado = mData2.get(position).getEstado();
+        if (estado.equals("Finalizando")){
+            holder.container3.setBackgroundColor(Color.RED);
+        }
 
         //Load image from Internet
 

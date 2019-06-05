@@ -62,6 +62,7 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".PrimerMensaje" />
+        <activity android:name=".Documentos" />
 
         <service
             android:name=".Notifications.MyFirebaseIdService"
@@ -85,7 +86,9 @@
         <activity android:name=".ResetPassword" />
         <activity android:name=".Calendario" />
         <activity android:name=".Configuracion_inter" />
-        <activity android:name=".Ofertas"></activity>
+        <activity android:name=".Ofertas" />
+        <activity android:name=".SubirDocumento" />
+        <activity android:name=".PagoRecibido"></activity>
     </application>
 
 </manifest>

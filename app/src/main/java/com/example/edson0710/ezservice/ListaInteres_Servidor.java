@@ -1,9 +1,11 @@
 package com.example.edson0710.ezservice;
 
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -69,6 +71,7 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
     String id_firebase;
     int id_noti;
     String date;
+    int flag;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -127,6 +130,10 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
                         lista.setProfesion(jsonObject.getString("profesion"));
                         lista.setId_us(jsonObject.getInt("id_us"));
                         lista.setEstado(jsonObject.getString("estado"));
+                        String estado = jsonObject.getString("estado");
+                        if (estado.equals("Finalizando")){
+                            flag +=1;
+                        }
                         lista.setId_firebase(jsonObject.getString("id_firebase"));
                         lista.setTelefono(jsonObject.getDouble("telefono"));
 
@@ -138,6 +145,22 @@ public class ListaInteres_Servidor extends android.support.v4.app.Fragment {
                     }
 
 
+                }
+
+                if (flag >= 1) {
+                    AlertDialog.Builder myBuild = new AlertDialog.Builder(getContext());
+                    myBuild.setMessage("Tienes un servicio pendiente por calificar");
+                    myBuild.setTitle("Ezservice");
+                    myBuild.setCancelable(false);
+                    myBuild.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+                    AlertDialog dialog = myBuild.create();
+                    dialog.show();
                 }
 
                 setuprecyclerview2(listaInter);

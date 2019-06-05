@@ -53,24 +53,24 @@
                 android:id="@+id/container_Calificacion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/contenedor_imagen">
+                android:layout_below="@id/contenedor_imagen"
+                android:layout_centerHorizontal="true">
 
                 <RelativeLayout
-                    android:layout_centerHorizontal="true"
                     android:layout_width="100dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true">
 
                     <TextView
                         android:id="@+id/calificacion_cardview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
                         android:layout_centerHorizontal="true"
                         android:layout_marginRight="2dp"
                         android:gravity="center"
                         android:text="Calificacion"
-                        android:textColor="#fff" />
+                        android:textColor="#fff"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="15dp"
@@ -86,40 +86,40 @@
                 android:id="@+id/nombre_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:layout_below="@+id/container_Calificacion"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="3dp"
                 android:gravity="center"
                 android:text="Nombre"
-                android:textColor="#fff" />
+                android:textColor="#fff"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/edad_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:layout_below="@+id/nombre_cardview"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="3dp"
                 android:gravity="center"
                 android:text="ocupacion"
-                android:textColor="#fff" />
+                android:textColor="#fff"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/ocupacion_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:layout_below="@+id/edad_cardview"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="3dp"
                 android:gravity="center"
                 android:text="10 años"
-                android:textColor="#fff" />
+                android:textColor="#fff"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/km_cardview"
@@ -127,12 +127,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ocupacion_cardview"
                 android:layout_marginLeft="16dp"
-                android:textStyle="bold"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="3dp"
                 android:gravity="center"
                 android:text="distancia"
-                android:textColor="#fff" />
+                android:textColor="#fff"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/descripcion_cardview"
@@ -149,21 +149,44 @@
                 android:text="Descripción"
                 android:textColor="#fff" />
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_centerHorizontal="true">
             <Button
                 android:id="@+id/btn_comentarios"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/round"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
+                android:layout_marginRight="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:text="Comentarios"
                 android:textColor="#fff"
+                android:textSize="10sp"
 
                 />
+
+            <Button
+                android:id="@+id/btn_documentos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toEndOf="@+id/btn_comentarios"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/round"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="Documentos"
+                android:textColor="#fff"
+                android:textSize="10sp"
+
+                />
+            </RelativeLayout>
 
 
         </RelativeLayout>

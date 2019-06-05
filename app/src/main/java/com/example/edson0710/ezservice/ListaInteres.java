@@ -1,5 +1,6 @@
 package com.example.edson0710.ezservice;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -51,6 +53,7 @@ public class ListaInteres extends Fragment {
     RecyclerViewAdapterLista myadapter = new RecyclerViewAdapterLista(getContext(), listaInter, id_uc);
     int id_us;
     FirebaseUser firebaseUser;
+    int flag;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -110,6 +113,10 @@ public class ListaInteres extends Fragment {
                         lista.setProfesion(jsonObject.getString("profesion"));
                         lista.setId_us(jsonObject.getInt("id_us"));
                         lista.setEstado(jsonObject.getString("estado"));
+                        String estado = jsonObject.getString("estado");
+                        if (estado.equals("Pendiente")){
+                            flag +=1;
+                        }
                         lista.setId_firebase(jsonObject.getString("id_firebase"));
                         lista.setTelefono(jsonObject.getDouble("telefono"));
                         lista.setChat(jsonObject.getInt("chat"));
@@ -122,6 +129,22 @@ public class ListaInteres extends Fragment {
                     }
 
 
+                }
+
+                if (flag >= 1) {
+                    AlertDialog.Builder myBuild = new AlertDialog.Builder(getContext());
+                    myBuild.setMessage("Tienes un pago pendiente");
+                    myBuild.setTitle("Ezservice");
+                    myBuild.setCancelable(false);
+                    myBuild.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+                    AlertDialog dialog = myBuild.create();
+                    dialog.show();
                 }
 
                 setuprecyclerview2(listaInter);
@@ -157,16 +180,21 @@ public class ListaInteres extends Fragment {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 121:
-                id_us = listaInter.get(item.getGroupId()).getId_us();
-                jsoncall2();
-                Toast.makeText(getContext(), "Usuario eliminado...", Toast.LENGTH_SHORT).show();
-                listaInter.remove(item.getGroupId());
-                recycler.removeViewAt(item.getGroupId());
-                myadapter.notifyItemRemoved(item.getGroupId());
-                myadapter.notifyItemRangeChanged(item.getGroupId(), listaInter.size());
-                myadapter.notifyDataSetChanged();
+                if (!listaInter.get(item.getGroupId()).getEstado().equals("Pendiente") && !listaInter.get(item.getGroupId()).getEstado().equals("Finalizando")) {
+                    id_us = listaInter.get(item.getGroupId()).getId_us();
+                    jsoncall2();
+                    Toast.makeText(getContext(), "Usuario eliminado...", Toast.LENGTH_SHORT).show();
+                    listaInter.remove(item.getGroupId());
+                    recycler.removeViewAt(item.getGroupId());
+                    myadapter.notifyItemRemoved(item.getGroupId());
+                    myadapter.notifyItemRangeChanged(item.getGroupId(), listaInter.size());
+                    myadapter.notifyDataSetChanged();
 
-                return true;
+                    return true;
+                } else {
+                    Toast.makeText(getContext(), "No puedes eliminar a este usuario", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
             default:
                 return super.onContextItemSelected(item);
         }

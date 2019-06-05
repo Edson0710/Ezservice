@@ -32,7 +32,7 @@ public class Configuracion_Server extends Fragment {
 
     String id, nombre, apellido, imagen, calificacion;
     Button cerrarSesion;
-    TextView tv_nombre, tv_calificacion, tv_historial, tv_editar;
+    TextView tv_nombre, tv_calificacion, tv_historial, tv_editar, tv_subir;
     Switch disponibilidad;
     ImageView iv_imagen;
     private RequestOptions option;
@@ -65,6 +65,7 @@ public class Configuracion_Server extends Fragment {
         iv_imagen = rootView.findViewById(R.id.iv_configuracion_server);
         tv_editar = rootView.findViewById(R.id.tv4_editar_server);
         disponibilidad = rootView.findViewById(R.id.switch1);
+        tv_subir = rootView.findViewById(R.id.tv_subir_archivo);
 
 
         jsoncall();
@@ -73,6 +74,15 @@ public class Configuracion_Server extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(rootView.getContext(), Historial.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+        });
+
+        tv_subir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(rootView.getContext(), SubirDocumento.class);
                 intent.putExtra("id", id);
                 startActivity(intent);
             }
